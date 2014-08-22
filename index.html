@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+
+	<link rel="Stylesheet" type="text/css" href="lib/jquery ui/jquery-ui.css"/> 	
+
+	<script type="text/javascript" src="lib/jquery.js"></script>
+	<script type="text/javascript" src="lib/jquery ui/jquery-ui.js"></script>
+	<script type="text/javascript" src="lib/underscore.js"></script>
+	<script type="text/javascript" src="lib/backbone.js"></script>
+	<script type="text/javascript" src="lib/pie/pie_uncompressed.js"></script>
+	<script type="text/javascript" src="lib/html5shiv/html5shiv.js"></script>
+
+	<style>
+		.ui-icon {
+			display: inline-block;
+		}
+
+		.list-item-type {
+			margin-left: 10%;
+		}
+
+		#charts li {
+			list-style-type: none;
+		}
+
+		#search {
+			padding-left: 16px;
+		}
+
+		#search-field .ui-icon {
+			position: relative;
+			left: 25px;
+			top: 2px;
+		}
+	</style>
+</head>
+<body>
+	<div id="main"></div>
+
+	<script type="text/template" id="workTemplate">
+		<div id="tabs">
+			<ul>
+			</ul>
+		</div>
+		<div id="chart"></div>
+	</script>
+
+	<script type="text/template" id="designTemplate">
+		<div id="toolbar" class="ui-widget-header ui-corner-all">
+			
+		</div>
+		<div id="preview"></div>
+		<aside id="chart_collection">
+		</aside>
+	</script>
+
+	<script type="text/template" id="chart-template">
+			<span>
+				Title <input id="title" value="<%=title%>"/>
+			</span>
+			<span>
+				List GUID <input id="list_guid" value="<%=list_guid%>"/>
+			</span>
+			<span>
+				Settings GUID <input id="settings_guid" value="<%=settings_guid%>"/>
+			</span>
+			<span>
+				Chart Type:
+				<select id="type">
+					<option value="n/a">N/A</option>
+					<option value="bar" data-class="bar">Bar</option>
+					<option value="pie" data-class="pie">Pie</option>
+					<option value="line" data-class="line">Line</option>
+				</select>
+				<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role"button">
+					<span class="ui-button-icon-primary ui-icon ui-icon-disk"/>
+					<span class="ui-button-text">Save</span>
+				</button>
+			</span>
+	</script>
+
+	<script type="text/template" id="chart-collection-template">
+		<div id="search-field">
+			<span class="ui-button-icon-primary ui-icon ui-icon-search"/>
+			<input id="search" type="text"/>
+		</div>
+		<ul id="charts"></ul>
+	</script>
+
+	<script type="text/template" id="chart-list-item-template">
+		<li class="ui-state-default">
+			<span class="ui-icon ui-icon-triangle-2-n-s"/>
+			<button title="Edit" class="ui-state-default ui-corner-all">
+				<span class="ui-icon ui-icon-pencil"/>
+			</button>
+			<button title="Delete" class="ui-state-default ui-corner-all">
+				<span class="ui-icon ui-icon-trash"/>
+			</button>
+			<span class="list-item-rank"><%=rank%></span>
+			<span class="list-item-title"><%=title%></span>
+			<span class="list-item-type"><%=type%></span>
+		</li>
+	</script>
+
+	<script type="text/template" id="noChartsTemplate">
+		<p>You don't seem to have any charts :(</p>
+		<p>Let's try adding some!</p>
+	</script>
+
+		<!-- Models -->
+		<script src="js/models/chart.js"></script>
+		<script src="js/models/library.js"></script>
+		<!-- Views -->
+		<script src="js/views/chart.js"></script>
+		<script src="js/views/chart-edit.js"></script>
+		<script src="js/views/library.js"></script>
+		<script src="js/views/app.js"></script>
+		<!-- Application -->
+		<script src="js/app.js"></script>
+		<!-- Router -->
+		<script src="js/routes/routes.js"></script>
+	</body>
+	</html>
