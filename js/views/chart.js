@@ -1,7 +1,6 @@
 var app = app || {};
 
 app.ChartView = Backbone.View.extend({
-	tagName: 'div',
 	template: _.template($('#chart-list-item-template').html()),
 
 	events: {

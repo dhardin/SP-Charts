@@ -6,24 +6,31 @@ app.DesignView = Backbone.View.extend({
 
 	events: {},
 	initialize: function () {
-		this.on('render', this.onRender);
+		this.on('renderComplete', this.onRenderComplete);
 	},
 
 	render: function () {
 		this.$el.html(this.template());
 
-		return this.trigger('render');
+		return this.trigger('renderComplete');
 	},
 
-	onRender: function () {
-		this.$info_bar = $('#info-bar');
-		this.$preview = $('#preview');
-		this.$chart_collection = $('#chart_collection');
-		this.libraryView = new app.LibraryView({el: this.$chart_collection.selector, charts: charts});
-		this.chartView = new app.ChartView({
-			model: (this.libraryView.collection.length > 0 ? this.libraryView.collection.at(0) : new app.Chart()),
-			el: this.$preview.selector
+	onRenderComplete: function () {
+		this.$info_bar = this.$('#info-bar');
+		this.$preview =this.$('#preview');
+		this.$chart_collection =this.$('#chart_collection');
+		this.libraryView = new app.LibraryView({
+			charts: charts
 		});
+		this.chartView = new app.ChartEditView({
+			model: (this.libraryView.collection.length > 0 ? this.libraryView.collection.at(0) : new app.Chart()),
+		});
+
+		this.libraryView.$el = this.$chart_collection;
+		this.chartView.$el = this.$info_bar;
+
+		this.libraryView.render();
+		this.chartView.render();
 	}
 
 

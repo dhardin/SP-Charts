@@ -15,24 +15,77 @@
 	<style>
 		.ui-icon {
 			display: inline-block;
+			zoom: 1.2;
 		}
 
 		.list-item-type {
 			margin-left: 10%;
 		}
 
+		#charts {
+			   padding-left: 0 !important;
+		}
 		#charts li {
 			list-style-type: none;
 		}
 
-		#search {
-			padding-left: 16px;
+		#search-field {
+				height: 40px;
+				background: #5c9ccc url("images/ui-bg_gloss-wave_55_5c9ccc_500x100.png") 50% 50% repeat-x;
 		}
+
 
 		#search-field .ui-icon {
 			position: relative;
 			left: 25px;
-			top: 2px;
+			top: 2px;	
+		}
+		#search-input {
+			padding-left: 16px;
+		}
+
+		#search {
+			 position: relative;
+			  top: 20%;
+		}
+		aside {
+			float: right;
+			width: 29%;
+			height: 100%;
+			border-left: 1px solid #c5dbec;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 1em;
+		}
+
+		#chart-edit {
+			float: left;
+			width: 70%;
+		}
+		#chart-edit div {
+			width: 100%;
+		}
+		#saveBtn {
+			margin-right: 5px;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 1em;
+		}
+
+		#info-bar {
+			min-height: 40px;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 1em;
+		}
+
+		#info-bar .text-field {
+			  position: relative;
+			  top: 20%;
+		}
+		#charts div {
+			cursor:default;
+			width: 100%	;
+		}
+		#charts button {
+			cursor: pointer;
 		}
 	</style>
 </head>
@@ -48,25 +101,27 @@
 	</script>
 
 	<script type="text/template" id="design-template">
-		<div id="info-bar" class="ui-widget-header ui-corner-all">
-			
+		<div id="chart-edit">
+			<div id="info-bar" class="ui-widget-header ui-corner-all">
+				
+			</div>
+			<div id="preview"></div>
 		</div>
-		<div id="preview"></div>
 		<aside id="chart_collection">
 		</aside>
 	</script>
 
 	<script type="text/template" id="chart-template">
-			<span>
+			<span class="text-field">
 				Title <input id="title" value="<%=title%>"/>
 			</span>
-			<span>
+			<span class="text-field">
 				List GUID <input id="list_guid" value="<%=list_guid%>"/>
 			</span>
-			<span>
+			<span class="text-field">
 				Settings GUID <input id="settings_guid" value="<%=settings_guid%>"/>
 			</span>
-			<span>
+			<span class="text-field">
 				Chart Type:
 				<select id="type">
 					<option value="n/a">N/A</option>
@@ -74,18 +129,22 @@
 					<option value="pie" data-class="pie">Pie</option>
 					<option value="line" data-class="line">Line</option>
 				</select>
-				<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role"button">
+				
+			</span>
+			<button id="saveBtn" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role"button">
 					<span class="ui-button-icon-primary ui-icon ui-icon-disk"/>
 					<span class="ui-button-text">Save</span>
 				</button>
-			</span>
 	</script>
 
 	<script type="text/template" id="chart-collection-template">
 		<div id="search-field">
-			<span class="ui-button-icon-primary ui-icon ui-icon-search"/>
-			<input id="search" type="text"/>
+			<div id="search">
+				<span class="ui-button-icon-primary ui-icon ui-icon-search"/>
+				<input id="search-input" type="text"/>
+			</div>
 		</div>
+		<h3>Charts</h3>
 		<ul id="charts"></ul>
 	</script>
 
