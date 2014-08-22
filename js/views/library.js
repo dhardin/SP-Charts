@@ -8,10 +8,9 @@ app.LibraryView = Backbone.View.extend({
 		'update-sort': 'updateSort'
 	},
 
-	initialize: function (initialBooks){
-		this.collection = new app.Library(initialBooks);
+	initialize: function (options){
+		this.collection = new app.Library(options.charts);
 		this.render();
-		
 	//	this.listenTo(this.collection, 'add', function(){app_router.navigate('//main', { trigger: true });});
 	//	this.listenTo(this.collection, 'reset', this.render);
 	},

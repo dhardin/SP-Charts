@@ -13,8 +13,10 @@ var Router = Backbone.Router.extend({
 	  },
 	
 	main: function  () {
-		 var libraryView = new app.LibraryView(charts);
-	    this.AppView.showView(libraryView);
+		var designView = new app.DesignView();
+		   this.AppView.showView(designView);
+		/* var libraryView = new app.LibraryView(charts);
+	    this.AppView.showView(libraryView);*/
 	},
 
 	editChart: function(id){

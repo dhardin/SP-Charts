@@ -10,6 +10,10 @@ app.ChartView = Backbone.View.extend({
 		'drop': 'onSortChange'
 	},
 
+	initialize: function (options) {
+
+	},
+
 	editChart: function(e){
 		var cid = this.model.cid;
 		app_router.navigate('edit/' + cid, { trigger: true });
