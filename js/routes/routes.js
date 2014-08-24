@@ -2,7 +2,7 @@ var app = app || {};
 
 var Router = Backbone.Router.extend({
 	routes: {
-		'': 'main',
+		'': 'editChart',
 		'main': 'main',
 		'edit': 'editChart',
 		'edit/:id': 'editChart'
@@ -20,9 +20,13 @@ var Router = Backbone.Router.extend({
 	},
 
 	editChart: function(id){
-		var chart = (id ? app.LibraryCollection.get({cid: id}) : new app.Chart());
-		var chartEditView = new app.ChartEditView({model: chart});
-		this.AppView.showView(chartEditView);
+
+		var designView = new app.DesignView({chart_id: id});
+		
+ 		this.AppView.showView(designView);
+		
+		//var chartEditView = new app.ChartEditView({model: chart});
+		//this.AppView.showView(chartEditView);
 	}
 });
 

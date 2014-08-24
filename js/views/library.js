@@ -4,15 +4,14 @@ app.LibraryView = Backbone.View.extend({
 	template: _.template($('#chart-collection-template').html()),
 
 	events: {
-		'keyup #search' : 'search',
+		'keyup #search-input' : 'search',
 		'update-sort': 'updateSort'
 	},
 
-	initialize: function (options){
-		this.collection = new app.Library(options.charts);
-		this.render();
-	//	this.listenTo(this.collection, 'add', function(){app_router.navigate('//main', { trigger: true });});
-	//	this.listenTo(this.collection, 'reset', this.render);
+	initialize: function (){
+		this.collection = app.LibraryCollection;
+		//this.render();
+		this.listenTo(this.collection, 'add, reset, change', function(){ this.render(this.collection);});
 	},
 
 	render: function (collection, filterText) {

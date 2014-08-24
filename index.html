@@ -11,6 +11,12 @@
 	<script type="text/javascript" src="lib/backbone.js"></script>
 	<script type="text/javascript" src="lib/pie/pie_uncompressed.js"></script>
 	<script type="text/javascript" src="lib/html5shiv/html5shiv.js"></script>
+	<script type="text/javascript" src="lib/raphael-min.js"></script>
+	<script type="text/javascript" src="lib/g.raphael-min.js"></script>
+	<script type="text/javascript" src="lib/g.bar-min.js"></script>
+	<script type="text/javascript" src="lib/g.dot-min.js"></script>
+	<script type="text/javascript" src="lib/g.line-min.js"></script>
+	<script type="text/javascript" src="lib/g.pie-min.js"></script>
 
 	<style>
 		.ui-icon {
@@ -29,11 +35,6 @@
 			list-style-type: none;
 		}
 
-		#search-field {
-				height: 40px;
-				background: #5c9ccc url("images/ui-bg_gloss-wave_55_5c9ccc_500x100.png") 50% 50% repeat-x;
-		}
-
 
 		#search-field .ui-icon {
 			position: relative;
@@ -41,26 +42,34 @@
 			top: 2px;	
 		}
 		#search-input {
-			padding-left: 16px;
+			padding-left: 25px;
+			width: 50%;
 		}
 
 		#search {
 			 position: relative;
 			  top: 20%;
 		}
-		aside {
-			float: right;
-			width: 29%;
-			height: 100%;
+		#chart_collection {
 			border-left: 1px solid #c5dbec;
 			font-family: Arial, Helvetica, sans-serif;
 			font-size: 1em;
 		}
+#chart-edit {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 70%; 
+}
 
-		#chart-edit {
-			float: left;
-			width: 70%;
-		}
+#chart_collection {
+    position: absolute;
+    left: 70%;
+    top: 0;
+    bottom: 0;
+    right: 0; 
+}
 		#chart-edit div {
 			width: 100%;
 		}
@@ -70,15 +79,21 @@
 			font-size: 1em;
 		}
 
-		#info-bar {
+		#info-bar, #search-field {
 			min-height: 40px;
 			font-family: Arial, Helvetica, sans-serif;
 			font-size: 1em;
+			background: rgba(73,155,234,1);
+
+		}
+
+		#info-bar button{
+			height: 30px;
 		}
 
 		#info-bar .text-field {
 			  position: relative;
-			  top: 20%;
+			  top: 30%;
 		}
 		#charts div {
 			cursor:default;
@@ -87,10 +102,18 @@
 		#charts button {
 			cursor: pointer;
 		}
+		#preview {
+			width: 100%;
+		}
+
+		#main, #chart-edit, #preview {
+			height: 100%;
+		}
+
 	</style>
 </head>
 <body>
-	<div id="main"></div>
+	<div id="main" class="clearfix"></div>
 
 	<script type="text/template" id="workTemplate">
 		<div id="tabs">
@@ -125,9 +148,11 @@
 				Chart Type:
 				<select id="type">
 					<option value="n/a">N/A</option>
-					<option value="bar" data-class="bar">Bar</option>
-					<option value="pie" data-class="pie">Pie</option>
-					<option value="line" data-class="line">Line</option>
+					<option value="Bar" data-class="bar">Bar</option>
+					<option value="Hbar" data-class="hbar">Horizontal Bar</option>
+					<option value="Dot" data-class="dot">Dot</option>
+					<option value="Pie" data-class="pie">Pie</option>
+					<option value="Line" data-class="line">Line</option>
 				</select>
 				
 			</span>
@@ -151,10 +176,10 @@
 	<script type="text/template" id="chart-list-item-template">
 		<li class="ui-state-default">
 			<span class="ui-icon ui-icon-triangle-2-n-s"/>
-			<button title="Edit" class="ui-state-default ui-corner-all">
+			<button id="editChartBtn" title="Edit" class="ui-state-default ui-corner-all">
 				<span class="ui-icon ui-icon-pencil"/>
 			</button>
-			<button title="Delete" class="ui-state-default ui-corner-all">
+			<button id="deleteChartBtn" title="Delete" class="ui-state-default ui-corner-all">
 				<span class="ui-icon ui-icon-trash"/>
 			</button>
 			<span class="list-item-rank"><%=rank%></span>
@@ -175,6 +200,7 @@
 		<script src="js/views/chart.js"></script>
 		<script src="js/views/chart-edit.js"></script>
 		<script src="js/views/library.js"></script>
+		<script src="js/views/preview.js"></script>
 		<script src="js/views/design.js"></script>
 		<script src="js/views/app.js"></script>
 		<!-- Application -->

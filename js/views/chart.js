@@ -5,7 +5,7 @@ app.ChartView = Backbone.View.extend({
 
 	events: {
 		'click #editChartBtn': 'editChart',
-		'click #deleteCharttn': 'deleteChart',
+		'click #deleteChartBtn': 'deleteChart',
 		'drop': 'onSortChange'
 	},
 
@@ -17,7 +17,7 @@ app.ChartView = Backbone.View.extend({
 		var cid = this.model.cid;
 		app_router.navigate('edit/' + cid, { trigger: true });
 		//package collection as strinified array
-		save();
+		//save();
 	},
 
 	deleteChart: function(e) {
@@ -25,7 +25,7 @@ app.ChartView = Backbone.View.extend({
 		this.model.destroy();
 		// Delete view
 		this.remove();
-		save();
+	//	save();
 	},
 
 	onSortChange: function (e, index) {

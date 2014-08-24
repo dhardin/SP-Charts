@@ -5,7 +5,7 @@ charts = [
 		title: 'Chart 1',
 		settings_guid: 'N/A',
 		list_guid: 'N/A',
-		type: 'Bar',
+		type: 'Line',
 		rank: '1'
 	},
 	{
@@ -24,3 +24,5 @@ charts = [
 	}
 ];
 
+
+app.LibraryCollection = new app.Library(charts);
