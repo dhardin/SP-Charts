@@ -110,6 +110,12 @@
 			height: 100%;
 		}
 
+		#menu {
+			display: inline-block; 
+		}
+
+
+
 	</style>
 </head>
 <body>
@@ -156,10 +162,18 @@
 				</select>
 				
 			</span>
-			<button id="saveBtn" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role"button">
-					<span class="ui-button-icon-primary ui-icon ui-icon-disk"/>
-					<span class="ui-button-text">Save</span>
-				</button>
+			<ul id="menu">
+				<li>
+					Menu
+					<ul>
+						<li class="newBtn"><span  class="ui-icon ui-icon-plusthick"></span>New</li>
+						<li class="saveBtn"><span  class="ui-icon ui-icon-disk"></span>Save</li>
+					</ul>
+				</li>
+			</ul>
+
+
+			
 	</script>
 
 	<script type="text/template" id="chart-collection-template">

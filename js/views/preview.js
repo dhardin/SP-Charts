@@ -6,7 +6,6 @@ app.PreviewView = Backbone.View.extend({
 	},
 
 	initialize: function () {
-		this.type = this.model.get('type').toLowerCase();
 		this.listenTo(app.LibraryCollection, 'change', this.render);
 	},
 
@@ -16,16 +15,16 @@ app.PreviewView = Backbone.View.extend({
 		// Creates canvas 640 × 480 at 10, 50
 		
 			 _.defer(_.bind(function() {  
-			 	var width = $('#preview').width(),
-			 		height = $('#preview').height() * 0.9,
+			 	var width = this.$el.width(),
+			 		height = this.$el.height() * 0.9,
 				data_arr = [55, 20, 13, 32, 5, 1, 2];
 
-				this.graph = $('#preview').children().length > 0 ? this.graph : Raphael($('#preview')[0], 0, 0);
+				this.graph = this.$el.children().length > 0 ? this.graph : Raphael(this.$el[0], 0, 0);
 				this.graph.setSize(width, height);
 
 				this.graph.clear();
 
-				switch(this.type.value.toLowerCase()){
+				switch(this.model.get('type').toLowerCase()){
 					case 'pie':
 						// Creates pie chart at with center at 320, 200,
 						// radius 100 and data: [55, 20, 13, 32, 5, 1, 2]
@@ -45,7 +44,7 @@ app.PreviewView = Backbone.View.extend({
 						this.graph.dotchart(0, 0, width, height, [76, 70, 67, 71, 69], [0, 1, 2, 3, 4], [100, 120, 140, 160, 500], {max: 10, axisylabels: ['Mexico', 'Argentina', 'Cuba', 'Canada', 'United States of America'], heat: true, axis: '0 0 1 1'})
 						break;
 				}
-  			}), this);
+  			}, this));
 
 		
 		

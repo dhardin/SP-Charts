@@ -27,10 +27,10 @@ app.DesignView = Backbone.View.extend({
 		this.$preview =this.$('#preview');
 		this.$chart_collection = this.$('#chart_collection');
 
-		chart =  (this.chart_id ?  this.libraryView.collection.get({cid: this.chart_id}) 
-					: (this.libraryView.collection.length > 0 
-						? this.libraryView.collection.at(0) 
-						: new app.Chart()));
+
+		chart =  (this.chart_id 
+					?  this.libraryView.collection.get({cid: this.chart_id})
+					: new app.Chart());
 
 		this.chartView = new app.ChartEditView({
 			model: chart
