@@ -7,6 +7,7 @@ app.PreviewView = Backbone.View.extend({
 
 	initialize: function () {
 		this.listenTo(app.LibraryCollection, 'change', this.render);
+		this.on('chart-change', this.render);
 	},
 
 	

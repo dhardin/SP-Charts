@@ -9,6 +9,7 @@ app.DesignView = Backbone.View.extend({
 	initialize: function (options) {
 		this.chart_id = options.chart_id || false;
 		this.libraryView =  new app.LibraryView();
+		
 
 		this.on('renderComplete', this.onRenderComplete);
 
@@ -35,7 +36,7 @@ app.DesignView = Backbone.View.extend({
 		this.chartView = new app.ChartEditView({
 			model: chart
 		});
-
+this.listenTo(this.chartView, 'chart-change', this.onChartChange);
 		this.previewView = new app.PreviewView({model: chart});
 
 		this.libraryView.setElement(this.$chart_collection);
@@ -43,8 +44,11 @@ app.DesignView = Backbone.View.extend({
 		this.previewView.setElement(this.$preview);
 		this.previewView.render();
 		this.libraryView.render();
-		this.chartView.render();
-		
+		this.chartView.render();	
+	},
+
+	onChartChange: function(e){
+		this.previewView.trigger('chart-change');
 	}
 
 

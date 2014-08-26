@@ -7,7 +7,8 @@ app.ChartEditView = Backbone.View.extend({
 
 	events:{
 		'click .saveBtn':'saveChart',
-		'click .newBtn': 'newChart'
+		'click .newBtn': 'newChart',
+		'change #type': 'onSelectChange'
 	},
 
 	initialize: function(){
@@ -56,6 +57,11 @@ app.ChartEditView = Backbone.View.extend({
 
 	newChart: function (e) {
 		app_router.navigate('edit', {trigger: true});
+	},
+
+	onSelectChange: function(e){
+		this.saveChart(e);
+		this.trigger('chart-change');
 	}
 
 });
