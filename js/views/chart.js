@@ -25,6 +25,7 @@ app.ChartView = Backbone.View.extend({
 		this.model.destroy();
 		// Delete view
 		this.remove();
+
 	//	save();
 	},
 
