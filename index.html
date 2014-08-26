@@ -19,6 +19,9 @@
 	<script type="text/javascript" src="lib/g.pie-min.js"></script>
 
 	<style>
+		.chart-list-item *, #search *{
+			text-indent: 0;
+		}
 		.ui-icon {
 			display: inline-block;
 			zoom: 1.2;
@@ -46,10 +49,6 @@
 			width: 50%;
 		}
 
-		#search {
-			 position: relative;
-			  top: 20%;
-		}
 		#chart_collection {
 			border-left: 1px solid #c5dbec;
 			font-family: Arial, Helvetica, sans-serif;
@@ -78,8 +77,11 @@
 			font-family: Arial, Helvetica, sans-serif;
 			font-size: 1em;
 		}
+		#search {
+			float: right;
+		}
 
-		#info-bar, #search-field {
+		#info-bar {
 			min-height: 40px;
 			font-family: Arial, Helvetica, sans-serif;
 			font-size: 1em;
@@ -92,8 +94,7 @@
 		}
 
 		#info-bar .text-field {
-			  position: relative;
-			  top: 30%;
+			  
 		}
 		#charts div {
 			cursor:default;
@@ -110,9 +111,18 @@
 			height: 100%;
 		}
 
-		#menu {
-			display: inline-block; 
+		#menu .submenu {
+			position: absolute;
+			left: 0 !important;
+			top: 25px !important;
+			list-style:none;
+			padding-left:0;
+			width: 100%;
 		}
+		#search-field h3 {
+			display: inline;
+		}
+
 
 
 
@@ -141,6 +151,15 @@
 	</script>
 
 	<script type="text/template" id="chart-template">
+			<ul id="menu">
+				<li>
+					Menu
+					<ul class="submenu">
+						<li class="newBtn"><span  class="ui-icon ui-icon-plusthick"></span>New</li>
+						<li class="saveBtn"><span  class="ui-icon ui-icon-disk"></span>Save</li>
+					</ul>
+				</li>
+			</ul>
 			<span class="text-field">
 				Title <input id="title" value="<%=title%>"/>
 			</span>
@@ -162,15 +181,7 @@
 				</select>
 				
 			</span>
-			<ul id="menu">
-				<li>
-					Menu
-					<ul>
-						<li class="newBtn"><span  class="ui-icon ui-icon-plusthick"></span>New</li>
-						<li class="saveBtn"><span  class="ui-icon ui-icon-disk"></span>Save</li>
-					</ul>
-				</li>
-			</ul>
+			
 
 
 			
@@ -178,17 +189,18 @@
 
 	<script type="text/template" id="chart-collection-template">
 		<div id="search-field">
+			<h3>Charts</h3>
 			<div id="search">
 				<span class="ui-button-icon-primary ui-icon ui-icon-search"/>
 				<input id="search-input" type="text"/>
 			</div>
 		</div>
-		<h3>Charts</h3>
+		
 		<ul id="charts"></ul>
 	</script>
 
 	<script type="text/template" id="chart-list-item-template">
-		<li class="ui-state-default">
+		<li class="chart-list-item ui-state-default">
 			<span class="ui-icon ui-icon-triangle-2-n-s"/>
 			<button id="editChartBtn" title="Edit" class="ui-state-default ui-corner-all">
 				<span class="ui-icon ui-icon-pencil"/>

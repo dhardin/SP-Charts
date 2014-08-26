@@ -14,29 +14,38 @@ app.LibraryView = Backbone.View.extend({
 		this.listenTo(this.collection, 'add, reset, change', function(){ this.render(this.collection);});
 	},
 
-	render: function (collection, filterText) {
+	render: function (collection, isFiltered) {
 		if(!collection){
 			this.$el.html(this.template());
 			this.$charts = this.$el.find('#charts'); 	
-			this.$filter = this.$el.find('#search');
+			this.$filter = this.$el.find('#search-input');
 		}
 
 		collection = collection || this.collection;
 		this.$charts.html('');
 
-		if (collection.length > 0){
-			collection.each(function(item){	
-				this.renderChart(item);
+		if (!isFiltered){
+			if (collection.length > 0){
+				collection.each(function(item){	
+					this.renderChart(item);
 
-			}, this);
-			this.$charts.sortable({
-				stop: function (event, ui) {
-					ui.item.trigger('drop', ui.item.index());
-				}
-			});
-			this.$charts.disableSelection();
+				}, this);
+				this.$charts.sortable({
+					stop: function (event, ui) {
+						ui.item.trigger('drop', ui.item.index());
+					}
+				});
+				this.$charts.disableSelection();
+			} else {
+				this.$charts.html($('#noChartsTemplate').html());
+			}
 		} else {
-			this.$charts.html($('#noChartsTemplate').html());
+			var totalItems = this.collection.length,
+			numItemsDisplayed = collection.toArray().length;
+			this.$charts.html('Displaying ' + numItemsDisplayed + ' out of ' + totalItems);
+			collection.each(function(item){
+				this.renderChart(item);
+			}, this);
 		}
 	},
 
@@ -66,7 +75,7 @@ app.LibraryView = Backbone.View.extend({
 	search: function(e){
 		var text = this.$filter.val();
 		if (text.length > 0){
-			this.renderList(this.collection.search(text));
+			this.render(this.collection.search(text), true);
 		} else {
 			this.render(this.collection);
 		}
