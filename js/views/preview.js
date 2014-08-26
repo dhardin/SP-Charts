@@ -61,7 +61,7 @@ app.PreviewView = Backbone.View.extend({
 					case 'bar':
 						this.graph.barchart(0, 0, width, height, data_arr, {})
 						break;
-					case 'hbar':
+					case 'horizontal bar':
 						this.graph.hbarchart(0, 0, width, height, data_arr, {})
 						break;
 					case 'dot':
