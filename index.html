@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<meta http=equiv="X-UA-Compatible" content="IE=Edge">
 	<meta charset="utf-8" />
-
-	<link rel="Stylesheet" type="text/css" href="lib/jquery ui/jquery-ui.css"/> 	
+	<link rel="Stylesheet" type="text/css" href="lib/jquery ui/jquery-ui.css"/> 
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="lib/foundation/css/foundation.css"/>
 
 	<script type="text/javascript" src="lib/jquery.js"></script>
 	<script type="text/javascript" src="lib/jquery ui/jquery-ui.js"></script>
+	<script type="text/javascript" src="lib/foundation/js/foundation.min.js"></script>
+	<script type="text/javascript" src="lib/foundation/js/vendor/modernizr.js"></script>
 	<script type="text/javascript" src="lib/underscore.js"></script>
 	<script type="text/javascript" src="lib/backbone.js"></script>
 	<script type="text/javascript" src="lib/pie/pie_uncompressed.js"></script>
@@ -17,119 +21,8 @@
 	<script type="text/javascript" src="lib/g.dot-min.js"></script>
 	<script type="text/javascript" src="lib/g.line-min.js"></script>
 	<script type="text/javascript" src="lib/g.pie-min.js"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
 
-	<style>
-		.chart-list-item *, #search *{
-			text-indent: 0;
-		}
-		.ui-icon {
-			display: inline-block;
-			zoom: 1.2;
-		}
-
-		.list-item-type {
-			margin-left: 10%;
-		}
-
-		#charts {
-			   padding-left: 0 !important;
-		}
-		#charts li {
-			list-style-type: none;
-		}
-
-
-		#search-field .ui-icon {
-			position: relative;
-			left: 25px;
-			top: 2px;	
-		}
-		#search-input {
-			padding-left: 25px;
-			width: 50%;
-		}
-
-		#chart_collection {
-			border-left: 1px solid #c5dbec;
-			font-family: Arial, Helvetica, sans-serif;
-			font-size: 1em;
-		}
-#chart-edit {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 70%; 
-}
-
-#chart_collection {
-    position: absolute;
-    left: 70%;
-    top: 0;
-    bottom: 0;
-    right: 0; 
-}
-		#chart-edit div {
-			width: 100%;
-		}
-		#saveBtn {
-			margin-right: 5px;
-			font-family: Arial, Helvetica, sans-serif;
-			font-size: 1em;
-		}
-		#search {
-			float: right;
-		}
-
-		#info-bar {
-			min-height: 40px;
-			font-family: Arial, Helvetica, sans-serif;
-			font-size: 1em;
-			background: rgba(73,155,234,1);
-
-		}
-
-		#info-bar button{
-			height: 30px;
-		}
-
-		#info-bar .text-field {
-			  
-		}
-		#charts div {
-			cursor:default;
-			width: 100%	;
-		}
-		#charts button {
-			cursor: pointer;
-		}
-		#preview {
-			width: 100%;
-		}
-
-		#main, #chart-edit, #preview {
-			height: 100%;
-		}
-
-		#menu {
-			z-index: 10;
-		}
-		#menu .submenu {
-			position: absolute;
-			left: 0 !important;
-			top: 25px !important;
-			list-style:none;
-			padding-left:0;
-			width: 100%;
-		}
-		#search-field h3 {
-			display: inline;
-		}
-
-
-
-
-	</style>
 </head>
 <body>
 	<div id="main" class="clearfix"></div>
@@ -141,39 +34,75 @@
 		</div>
 		<div id="chart"></div>
 	</script>
-
+	
 	<script type="text/template" id="design-template">
-		<div id="chart-edit">
-			<div id="info-bar" class="ui-widget-header ui-corner-all">
-				
+		<nav id="nav" class="top-bar" data-topbar role="navigation">
+			<ul class="title-area">
+				<li class="name">
+					<h1><a href="#">Dashboard Design</a></h1>
+				</li>
+				<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+			</ul>
+
+			<section class="top-bar-section">
+				<ul class="navBtns right">
+					<li class="has-form">
+					  <div class="row collapse">
+					    <div class="large-8 small-9 columns">
+					      <input id="search" type="text" placeholder="Find Stuff">
+					    </div>
+					    <div class="large-4 small-3 columns">
+					      <a href="#" class="alert button expand">Search</a>
+					    </div>
+					  </div>
+					</li> 
+					<li class="has-form">
+					  <a href="#" id='newBtn' class="button">New</a>
+					</li>
+					<li class="has-form">
+					  <a href="#" id='newBtn' class="button">Save</a>
+					</li>
+				</ul>
+			</section>
+		</nav>
+		<div class="row">
+			<div class="small-12 large-8 columns">
+				<section id="chart-edit">
+					<div id="info-bar" class="ui-widget-header ui-corner-all">
+						
+					</div>
+					<div id="preview"></div>
+				</section>
 			</div>
-			<div id="preview"></div>
-		</div>
-		<aside id="chart_collection">
-		</aside>
+			<div class="small-12 large-4 columns">
+				<aside id="chart_collection"></aside>
+			</div>
+	</div>
 	</script>
 
 	<script type="text/template" id="chart-template">
-			<ul id="menu">
-				<li>
-					Menu
-					<ul class="submenu">
-						<li class="newBtn"><span  class="ui-icon ui-icon-plusthick"></span>New</li>
-						<li class="saveBtn"><span  class="ui-icon ui-icon-disk"></span>Save</li>
-					</ul>
-				</li>
-			</ul>
-			<span class="text-field">
-				Title <input id="title" value="<%=title%>"/>
-			</span>
-			<span class="text-field">
-				List GUID <input id="list_guid" value="<%=list_guid%>"/>
-			</span>
-			<span class="text-field">
-				Settings GUID <input id="settings_guid" value="<%=settings_guid%>"/>
-			</span>
-			<span class="text-field">
-				Chart Type:
+		<div class="row">
+			<div class="small-12 medium-6 large-3 columns">
+				<div class="text-field">
+					Title </br>
+					<input id="title" value="<%=title%>"/>
+				</div>
+			</div>
+			<div class="small-12 medium-6 large-3 columns">
+			<div class="text-field">
+				List GUID </br>
+				<input id="list_guid" value="<%=list_guid%>"/>
+			</div>
+			</div>
+			<div class="small-12 medium-6 large-3 columns">
+			<div class="text-field">
+				Settings GUID </br>
+				<input id="settings_guid" value="<%=settings_guid%>"/>
+			</div>
+			</div>
+			<div class="small-12 medium-6 large-3 columns">
+			<div class="text-field">
+				Chart Type:</br>
 				<select id="type">
 					<option value="n/a">N/A</option>
 					<option value="Bar" data-class="bar">Bar</option>
@@ -182,8 +111,8 @@
 					<option value="Pie" data-class="pie">Pie</option>
 					<option value="Line" data-class="line">Line</option>
 				</select>
-				
-			</span>
+			</div>
+			</div>
 			
 
 
@@ -191,14 +120,6 @@
 	</script>
 
 	<script type="text/template" id="chart-collection-template">
-		<div id="search-field">
-			<h3>Charts</h3>
-			<div id="search">
-				<span class="ui-button-icon-primary ui-icon ui-icon-search"/>
-				<input id="search-input" type="text"/>
-			</div>
-		</div>
-		
 		<ul id="charts"></ul>
 	</script>
 
@@ -221,6 +142,10 @@
 		<p>Let's try adding some!</p>
 	</script>
 
+	<script type="text/javascript">
+		$(document).foundation();
+	</script>
+	
 		<!-- Models -->
 		<script src="js/models/chart.js"></script>
 		<script src="js/models/library.js"></script>
@@ -235,5 +160,8 @@
 		<script src="js/app.js"></script>
 		<!-- Router -->
 		<script src="js/routes/routes.js"></script>
+
+
+	
 	</body>
 	</html>

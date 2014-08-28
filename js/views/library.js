@@ -4,13 +4,13 @@ app.LibraryView = Backbone.View.extend({
 	template: _.template($('#chart-collection-template').html()),
 
 	events: {
-		'keyup #search-input' : 'search',
 		'update-sort': 'updateSort'
 	},
 
 	initialize: function (){
 		this.collection = app.LibraryCollection;
 		//this.render();
+		this.on('search', this.search);
 		this.listenTo(this.collection, 'add, reset, change', function(){ this.render(this.collection);});
 	},
 
@@ -18,7 +18,6 @@ app.LibraryView = Backbone.View.extend({
 		if(!collection){
 			this.$el.html(this.template());
 			this.$charts = this.$el.find('#charts'); 	
-			this.$filter = this.$el.find('#search-input');
 		}
 
 		collection = collection || this.collection;
@@ -72,8 +71,8 @@ app.LibraryView = Backbone.View.extend({
     	this.render(this.collection);
     },
 
-	search: function(e){
-		var text = this.$filter.val();
+	search: function(options){
+		var text = options.val;
 		if (text.length > 0){
 			this.render(this.collection.search(text), true);
 		} else {

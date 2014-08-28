@@ -5,6 +5,7 @@ app.DesignView = Backbone.View.extend({
 	template: _.template($('#design-template').html()),
 
 	events: {
+		'change #search': 'onSearch'
 	},
 	initialize: function (options) {
 		this.chart_id = options.chart_id || false;
@@ -12,6 +13,7 @@ app.DesignView = Backbone.View.extend({
 		
 
 		this.on('renderComplete', this.onRenderComplete);
+
 
 	},
 
@@ -27,7 +29,7 @@ app.DesignView = Backbone.View.extend({
 		this.$info_bar = this.$('#info-bar');
 		this.$preview =this.$('#preview');
 		this.$chart_collection = this.$('#chart_collection');
-
+		this.$search = this.$('#search');
 
 		chart =  (this.chart_id 
 					?  this.libraryView.collection.get({cid: this.chart_id})
@@ -48,7 +50,12 @@ this.listenTo(this.chartView, 'chart-change', this.onChartChange);
 	},
 
 	onChartChange: function(e){
+		this.chartView
 		this.previewView.trigger('chart-change');
+	},
+
+	onSearch: function(e){
+		this.libraryView.trigger('search', {val: this.$search.val()});
 	}
 
 

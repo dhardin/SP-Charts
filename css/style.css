@@ -1,0 +1,54 @@
+	html, body, #main, #main > div { width:100%; height:100%; }
+
+		.chart-list-item *, #search *{
+			text-indent: 0;
+		}
+		.ui-icon {
+			display: inline-block;
+			zoom: 1.2;
+		}
+
+		.list-item-type {
+			margin-left: 10%;
+		}
+
+		#charts {
+			   padding-left: 0 !important;
+		}
+		#charts li {
+			list-style-type: none;
+		}
+
+		#chart_collection {
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 1em;
+		}
+		aside .libraryCollection {
+			overflow: auto;
+		}
+
+		
+		#charts div {
+			cursor:default;
+			width: 100%	;
+		}
+		#charts button {
+			cursor: pointer;
+		}
+		#preview {
+			width: 100%;
+		}
+
+		#main, #chart-edit, #preview {
+			height: 100%;
+		}
+
+		#search {
+			height: 1.8rem !important;
+		}
+		
+		.text-field input {
+			width: 100%;
+		}
+	
+

@@ -17,7 +17,7 @@ app.PreviewView = Backbone.View.extend({
 		
 			 _.defer(_.bind(function() {  
 			 	var width = this.$el.width(),
-			 		height = this.$el.height() * 0.9,
+			 		height = this.$el.height() * 0.7,
 				data_arr = [55, 20, 13, 32, 5, 1, 2],
 				legend_arr = [], i;
 
@@ -34,7 +34,7 @@ app.PreviewView = Backbone.View.extend({
 					case 'pie':
 						// Creates pie chart at with center at 320, 200,
 						// radius 100 and data: [55, 20, 13, 32, 5, 1, 2]
-						var pie = this.graph.piechart(width/2, height/2, 200, data_arr,  { legend: legend_arr, legendpos: "east"});
+						var pie = this.graph.piechart(width/2, height/2, height*0.4, data_arr,  { legend: legend_arr, legendpos: "east"});
 
 		                pie.hover(function () {
 		                    this.sector.stop();
