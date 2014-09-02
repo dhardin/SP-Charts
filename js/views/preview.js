@@ -17,7 +17,7 @@ app.PreviewView = Backbone.View.extend({
 		
 			 _.defer(_.bind(function() {  
 			 	var width = this.$el.width(),
-			 		height = this.$el.height() * 0.7,
+			 		height = this.$el.parent().height() * 5,	
 				data_arr = [55, 20, 13, 32, 5, 1, 2],
 				legend_arr = [], i;
 
@@ -25,10 +25,11 @@ app.PreviewView = Backbone.View.extend({
 					legend_arr.push("%%.%%");
 				}
 
-				this.graph = this.$el.children().length > 0 ? this.graph : Raphael(this.$el[0], 0, 0);
-				this.graph.setSize(width, height);
+				this.graph = this.$el.children().length > 0 ? this.graph : Raphael(this.$el[0]);
+				this.graph.setViewBox(0,0,width, height, true);
 
-				this.graph.clear();
+				this.graph.setSize('100%', '100%');
+				
 
 				switch(this.model.get('type').toLowerCase()){
 					case 'pie':
@@ -69,6 +70,8 @@ app.PreviewView = Backbone.View.extend({
 						this.graph.dotchart(0, 0, width, height, [76, 70, 67, 71, 69], [0, 1, 2, 3, 4], [100, 120, 140, 160, 500], {max: 10, axisylabels: ['Mexico', 'Argentina', 'Cuba', 'Canada', 'United States of America'], heat: true, axis: '0 0 1 1'})
 						break;
 				}
+					$(this.graph.canvas).find('text').attr('font', '100px Arial, sans-serif');
+
   			}, this));
 
 		

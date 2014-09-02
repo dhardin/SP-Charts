@@ -5,7 +5,7 @@ app.DesignView = Backbone.View.extend({
 	template: _.template($('#design-template').html()),
 
 	events: {
-		'change #search': 'onSearch'
+		'keyup #search': 'onSearch'
 	},
 	initialize: function (options) {
 		this.chart_id = options.chart_id || false;
@@ -50,7 +50,6 @@ this.listenTo(this.chartView, 'chart-change', this.onChartChange);
 	},
 
 	onChartChange: function(e){
-		this.chartView
 		this.previewView.trigger('chart-change');
 	},
 

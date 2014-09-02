@@ -1,0 +1,88 @@
+element.style {
+}
+@media only screen and (min-width: 40.063em)
+.top-bar-section ul li {
+float: left;
+}
+.top-bar-section ul li {
+background: #333333;
+}
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td {
+margin: 0;
+padding: 0;
+}
+*, *:before, *:after {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+user agent stylesheetli {
+display: list-item;
+text-align: -webkit-match-parent;
+}
+Pseudo ::before element
+*, *:before, *:after {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+Pseudo ::after element
+*, *:before, *:after {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+Inherited from ul.right.show-for-large-up
+.top-bar ul {
+margin-bottom: 0;
+list-style: none;
+}
+ul, ol, dl {
+font-size: 1rem;
+line-height: 1.6;
+margin-bottom: 1.11111rem;
+list-style-position: outside;
+font-family: inherit;
+}
+user agent stylesheetul, menu, dir {
+display: block;
+list-style-type: disc;
+-webkit-margin-before: 1em;
+-webkit-margin-after: 1em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 40px;
+}
+Inherited from nav.top-bar
+.top-bar {
+overflow: hidden;
+height: 45px;
+line-height: 45px;
+position: relative;
+background: #333333;
+margin-bottom: 0;
+}
+Inherited from body.antialiased.hide-extras
+.antialiased {
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+body {
+background: #fff;
+color: #222;
+padding: 0;
+margin: 0;
+font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !important;
+font-weight: normal;
+font-style: normal;
+line-height: 150%;
+position: relative;
+cursor: default;
+}
+html, body {
+font-size: 100%;
+}
+Inherited from html.js.flexbox.flexboxlegacy.canvas.canvastext.webgl.no-touch.geolocation.postmessage.websqldatabase.indexeddb.hashchange.history.draganddrop.websockets.rgba.hsla.multiplebgs.backgroundsize.borderimage.borderradius.boxshadow.textshadow.opacity.cssanimations.csscolumns.cssgradients.cssreflections.csstransforms.csstransforms3d.csstransitions.fontface.generatedcontent.video.audio.localstorage.sessionstorage.webworkers.applicationcache.svg.inlinesvg.smil.svgclippaths
+html, body {
+font-size: 100%;
+}

@@ -36,7 +36,8 @@
 	</script>
 	
 	<script type="text/template" id="design-template">
-		<nav id="nav" class="top-bar" data-topbar role="navigation">
+		<div class="sticky">
+			<nav id="nav" class="top-bar" data-topbar role="navigation">
 			<ul class="title-area">
 				<li class="name">
 					<h1><a href="#">Dashboard Design</a></h1>
@@ -46,63 +47,59 @@
 
 			<section class="top-bar-section">
 				<ul class="navBtns right">
-					<li class="has-form">
-					  <div class="row collapse">
-					    <div class="large-8 small-9 columns">
-					      <input id="search" type="text" placeholder="Find Stuff">
-					    </div>
-					    <div class="large-4 small-3 columns">
-					      <a href="#" class="alert button expand">Search</a>
-					    </div>
-					  </div>
-					</li> 
-					<li class="has-form">
-					  <a href="#" id='newBtn' class="button">New</a>
+					  <li class="active">
+					    <a href="#" id='newBtn'>New</a>
+					</li>
+					<li class="divider"></li>
+					 <li class="active">
+						<a href="#" id='saveBtn'>Save</a>
 					</li>
 					<li class="has-form">
-					  <a href="#" id='newBtn' class="button">Save</a>
+					     <input id="search" class="expand"  type="text" placeholder="Find Stuff">
 					</li>
 				</ul>
 			</section>
 		</nav>
-		<div class="row">
-			<div class="small-12 large-8 columns">
+	</div>
+		<div class="row workArea">
+			<div class="small-12 large-6 columns">
+				<aside id="chart_collection"></aside>
+			</div>
+			<div class="small-12 large-6 columns">
 				<section id="chart-edit">
-					<div id="info-bar" class="ui-widget-header ui-corner-all">
+					<div id="info-bar">
 						
 					</div>
 					<div id="preview"></div>
 				</section>
 			</div>
-			<div class="small-12 large-4 columns">
-				<aside id="chart_collection"></aside>
-			</div>
 	</div>
 	</script>
 
 	<script type="text/template" id="chart-template">
+		<form>
 		<div class="row">
 			<div class="small-12 medium-6 large-3 columns">
 				<div class="text-field">
-					Title </br>
-					<input id="title" value="<%=title%>"/>
+					<label>Title</label>
+					<input type="text" id="title" value="<%=title%>"/>
 				</div>
 			</div>
 			<div class="small-12 medium-6 large-3 columns">
 			<div class="text-field">
-				List GUID </br>
-				<input id="list_guid" value="<%=list_guid%>"/>
+				<label>List GUID</label>
+				<input type="text" id="list_guid" value="<%=list_guid%>"/>
 			</div>
 			</div>
 			<div class="small-12 medium-6 large-3 columns">
 			<div class="text-field">
-				Settings GUID </br>
-				<input id="settings_guid" value="<%=settings_guid%>"/>
+				<label>Settings GUID</label>
+				<input type="text" id="settings_guid" value="<%=settings_guid%>"/>
 			</div>
 			</div>
 			<div class="small-12 medium-6 large-3 columns">
 			<div class="text-field">
-				Chart Type:</br>
+				<label>Chart Type</label>
 				<select id="type">
 					<option value="n/a">N/A</option>
 					<option value="Bar" data-class="bar">Bar</option>
@@ -113,6 +110,7 @@
 				</select>
 			</div>
 			</div>
+		</form>
 			
 
 
@@ -141,11 +139,8 @@
 		<p>You don't seem to have any charts :(</p>
 		<p>Let's try adding some!</p>
 	</script>
-
-	<script type="text/javascript">
-		$(document).foundation();
-	</script>
 	
+
 		<!-- Models -->
 		<script src="js/models/chart.js"></script>
 		<script src="js/models/library.js"></script>
@@ -161,7 +156,9 @@
 		<!-- Router -->
 		<script src="js/routes/routes.js"></script>
 
-
+<script type="text/javascript">
+		$(document).foundation(); 
+	</script>
 	
 	</body>
 	</html>
