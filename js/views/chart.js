@@ -5,6 +5,7 @@ app.ChartView = Backbone.View.extend({
 
 	events: {
 		'click #editChartBtn': 'editChart',
+		'mouseup': 'editChart',
 		'click #deleteChartBtn': 'deleteChart',
 		'drop': 'onSortChange'
 	},

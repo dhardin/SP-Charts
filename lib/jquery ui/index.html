@@ -72,6 +72,12 @@
 
 
 
+<!-- Autocomplete -->
+<h2 class="demoHeaders">Autocomplete</h2>
+<div>
+	<input id="autocomplete" title="type &quot;a&quot;">
+</div>
+
 
 
 <!-- Button -->
@@ -305,6 +311,10 @@
 </ul>
 
 
+<!-- Slider -->
+<h2 class="demoHeaders">Slider</h2>
+<div id="slider"></div>
+
 
 
 <!-- Datepicker -->
@@ -330,6 +340,10 @@
 </select>
 
 
+
+<!-- Spinner -->
+<h2 class="demoHeaders">Spinner</h2>
+<input id="spinner">
 
 
 
@@ -385,6 +399,34 @@ $( "#accordion" ).accordion();
 
 
 
+var availableTags = [
+	"ActionScript",
+	"AppleScript",
+	"Asp",
+	"BASIC",
+	"C",
+	"C++",
+	"Clojure",
+	"COBOL",
+	"ColdFusion",
+	"Erlang",
+	"Fortran",
+	"Groovy",
+	"Haskell",
+	"Java",
+	"JavaScript",
+	"Lisp",
+	"Perl",
+	"PHP",
+	"Python",
+	"Ruby",
+	"Scala",
+	"Scheme"
+];
+$( "#autocomplete" ).autocomplete({
+	source: availableTags
+});
+
 
 
 $( "#button" ).button();
@@ -429,6 +471,11 @@ $( "#datepicker" ).datepicker({
 
 
 
+$( "#slider" ).slider({
+	range: true,
+	values: [ 17, 67 ]
+});
+
 
 
 $( "#progressbar" ).progressbar({
@@ -436,6 +483,8 @@ $( "#progressbar" ).progressbar({
 });
 
 
+
+$( "#spinner" ).spinner();
 
 
 

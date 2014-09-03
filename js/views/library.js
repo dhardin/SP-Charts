@@ -46,6 +46,8 @@ app.LibraryView = Backbone.View.extend({
 				this.renderChart(item);
 			}, this);
 		}
+
+		
 	},
 
 	renderChart : function(item){

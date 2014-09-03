@@ -25,47 +25,39 @@
 
 </head>
 <body>
-	<div id="main" class="clearfix"></div>
+	<div id="main"></div>
 
 	<script type="text/template" id="workTemplate">
-		<div id="tabs">
-			<ul>
-			</ul>
-		</div>
 		<div id="chart"></div>
 	</script>
 	
 	<script type="text/template" id="design-template">
-		<div class="sticky">
-			<nav id="nav" class="top-bar" data-topbar role="navigation">
-			<ul class="title-area">
-				<li class="name">
-					<h1><a href="#">Dashboard Design</a></h1>
-				</li>
-				<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-			</ul>
+			<div class="off-canvas-wrap" data-offcanvas>
+  <div class="inner-wrap">
+			<nav class="tab-bar">
+			  <div class="left tab-bar-section">Dashboard Design</div>
+			  <div class="right-small">
+			  	 <a role="button" aria-expanded="false" aria-controls="idOfRightMenu" class="right-off-canvas-toggle menu-icon" ><span></span></a>
+			  </div>
+			</nav>
+		<aside class="right-off-canvas-menu">
+		  <ul class="off-canvas-list">
+		  	
+			<li class="active">
+			    <a href="#" id='newBtn'>New</a>
+			</li>
+			<li class="active">
+				<a href="#" id='saveBtn'>Save</a>
+			</li>
+			 <li><input id="search" class="expand"  type="text" placeholder="Find Stuff"></li>
+		    <li><label>Charts</label></li>
+		    <div  id="chart_collection"></div>
+		  </ul>
+		</aside>
 
-			<section class="top-bar-section">
-				<ul class="navBtns right">
-					  <li class="active">
-					    <a href="#" id='newBtn'>New</a>
-					</li>
-					<li class="divider"></li>
-					 <li class="active">
-						<a href="#" id='saveBtn'>Save</a>
-					</li>
-					<li class="has-form">
-					     <input id="search" class="expand"  type="text" placeholder="Find Stuff">
-					</li>
-				</ul>
-			</section>
-		</nav>
-	</div>
-		<div class="row workArea">
-			<div class="small-12 large-6 columns">
-				<aside id="chart_collection"></aside>
-			</div>
-			<div class="small-12 large-6 columns">
+    <section class="main-section">
+     <div class="row workArea">
+			<div class="small-12 columns">
 				<section id="chart-edit">
 					<div id="info-bar">
 						
@@ -74,6 +66,12 @@
 				</section>
 			</div>
 	</div>
+    </section>
+
+  <a class="exit-off-canvas"></a>
+	</div>
+</div>
+		
 	</script>
 
 	<script type="text/template" id="chart-template">
@@ -122,7 +120,7 @@
 	</script>
 
 	<script type="text/template" id="chart-list-item-template">
-		<li class="chart-list-item ui-state-default">
+		<li class="chart-list-item">
 			<span class="ui-icon ui-icon-triangle-2-n-s"/>
 			<button id="editChartBtn" title="Edit" class="ui-state-default ui-corner-all">
 				<span class="ui-icon ui-icon-pencil"/>

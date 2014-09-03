@@ -30,6 +30,7 @@ app.DesignView = Backbone.View.extend({
 		this.$preview =this.$('#preview');
 		this.$chart_collection = this.$('#chart_collection');
 		this.$search = this.$('#search');
+		this.$chart_section = this.$('#chart_section');
 
 		chart =  (this.chart_id 
 					?  this.libraryView.collection.get({cid: this.chart_id})
@@ -47,6 +48,12 @@ this.listenTo(this.chartView, 'chart-change', this.onChartChange);
 		this.previewView.render();
 		this.libraryView.render();
 		this.chartView.render();	
+
+		//initiate jquery collapse plugin
+		 this.$chart_section.accordion({
+      		collapsible: true,
+      		heightStyle: "content" 
+    	 });
 	},
 
 	onChartChange: function(e){
