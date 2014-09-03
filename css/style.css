@@ -1,13 +1,20 @@
 		
-	
+		#main, #main > div, .off-canvas-wrap, .inner-wrap, .workArea, .workArea .columns, #chart-edit {
+			height: 100%;
+		}
+
+		.main-section {
+			overflow-y: auto;
+		}
+		#preview {
+			height: 75%;
+		}
 		.chart-list-item *, #search *{
 			text-indent: 0;
 		}
 		.ui-icon {
 			display: inline-block;
 		}
-
-
 
 
 		#chart_collection {

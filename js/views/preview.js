@@ -17,7 +17,7 @@ app.PreviewView = Backbone.View.extend({
 		
 			 _.defer(_.bind(function() {  
 			 	var width = this.$el.width(),
-			 		height = this.$el.parent().height() * 5,	
+			 		height = this.$el.parent().height(),	
 				data_arr = [55, 20, 13, 32, 5, 1, 2],
 				legend_arr = [], i;
 
@@ -26,6 +26,9 @@ app.PreviewView = Backbone.View.extend({
 				}
 
 				this.graph = this.$el.children().length > 0 ? this.graph : Raphael(this.$el[0]);
+
+				this.graph.clear();
+
 				this.graph.setViewBox(0,0,width, height, true);
 
 				this.graph.setSize('100%', '100%');

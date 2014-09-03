@@ -5,14 +5,14 @@ charts = [
 		title: 'Chart 1',
 		settings_guid: 'N/A',
 		list_guid: 'N/A',
-		type: 'Line',
+		type: 'Bar',
 		rank: '1'
 	},
 	{
 		title: 'Chart 2',
 		settings_guid: 'N/A',
 		list_guid: 'N/A',
-		type: 'Line',
+		type: 'Dot',
 		rank: '2'
 	},
 	{
