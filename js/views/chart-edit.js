@@ -193,7 +193,8 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	onSelectChange: function(e){
-		this.saveChart(e);
+		//trigger chart save btn click
+		this.$saveBtn.click();
 		this.trigger('chart-change');
 	},
 
