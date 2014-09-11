@@ -45,12 +45,6 @@
 		  	<li>
 			    <a href="#" id='goLiveBtn'>Go Live!</a>
 			</li>
-			<li>
-			    <a href="#" id='newBtn'>New</a>
-			</li>
-			<li>
-				<a href="#" id='saveBtn'>Save</a>
-			</li>
 		    <li><label>Charts</label></li>
 		    <li><input id="search" class="expand"  type="text" placeholder="Search Charts"></li>
 		    <div  id="chart_collection"></div>
@@ -77,44 +71,58 @@
 	</script>
 
 	<script type="text/template" id="chart-template">
-		<form>
-		<div class="row">
-			<div class="small-12 medium-6 large-3 columns">
-				<div class="text-field">
-					<label>Title</label>
-					<input type="text" id="title" value="<%=title%>"/>
+			<!-- A default button-group with small buttons inside -->
+		<ul class="button-group stack-for-small">
+			<li><a href="#" class="button" id='newBtn'>New</a></li>
+			<li><a href="#" class="button" id='saveBtn'>Save</a></li>
+			<li><a href="#" class="button disabled" id='fetchBtn'>Fetch Data</a></li>
+		</ul>
+		<form data-abide>
+			<div class="row">
+				<div class="small-12 medium-6 large-6 columns">
+					<div class="text-field">
+						<label>Title <small>required</small>
+							<input type="text" id="title" value="<%=title%>" placeholder="Your Chart Title" required patter="[a-zA-Z0-9]+"/>
+						</label>
+						<small class="error">Title is required and must be a string.</small>
+					</div>
+				</div>
+				<div class="small-12 medium-6 large-6 columns">
+					<div class="text-field">
+						<label>Chart Type <small>required</small>
+							<select id="type" required>
+								<option value="">N/A</option>
+								<option value="Bar" data-class="bar">Bar</option>
+								<option value="Horizontal Bar" data-class="hbar">Horizontal Bar</option>
+								<option value="Dot" data-class="dot">Dot</option>
+								<option value="Pie" data-class="pie">Pie</option>
+								<option value="Line" data-class="line">Line</option>
+							</select>
+						</label>
+						<small class="error">Chart Type is required and must be something other than N/A.</small>
+					</div>
 				</div>
 			</div>
-			<div class="small-12 medium-6 large-3 columns">
-			<div class="text-field">
-				<label>List GUID</label>
-				<input type="text" id="list_guid" value="<%=list_guid%>"/>
-			</div>
-			</div>
-			<div class="small-12 medium-6 large-3 columns">
-			<div class="text-field">
-				<label>Settings GUID</label>
-				<input type="text" id="settings_guid" value="<%=settings_guid%>"/>
-			</div>
-			</div>
-			<div class="small-12 medium-6 large-3 columns">
-			<div class="text-field">
-				<label>Chart Type</label>
-				<select id="type">
-					<option value="n/a">N/A</option>
-					<option value="Bar" data-class="bar">Bar</option>
-					<option value="Horizontal Bar" data-class="hbar">Horizontal Bar</option>
-					<option value="Dot" data-class="dot">Dot</option>
-					<option value="Pie" data-class="pie">Pie</option>
-					<option value="Line" data-class="line">Line</option>
-				</select>
-			</div>
+				
+			<div class="row">
+				<div class="small-12 medium-6 large-6 columns">
+					<div class="text-field">
+						<label>URL <small>required</small>
+							<input type="url" id="url" value="<%=url%>" placeholder="https://example.com or http://example.com" required pattern="https?://.+" />
+						</label>
+						<small class="error">URL is required and must be a valid URL.</small>
+					</div>
+				</div>
+				<div class="small-12 medium-6 large-6 columns">
+					<div class="text-field">
+						<label>List GUID
+						<input type="text" id="list_guid" value="<%=list_guid%>" placeholder="{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX}" required pattern="guid"/>
+						<small class="error">List GUID is required and must be a valid GUID.</small>
+						</label>
+					</div>
+				</div>
 			</div>
 		</form>
-			
-
-
-			
 	</script>
 
 	<script type="text/template" id="chart-collection-template">
@@ -141,23 +149,29 @@
 	</script>
 	
 
-		<!-- Models -->
-		<script src="js/models/chart.js"></script>
-		<script src="js/models/library.js"></script>
-		<!-- Views -->
-		<script src="js/views/chart.js"></script>
-		<script src="js/views/chart-edit.js"></script>
-		<script src="js/views/library.js"></script>
-		<script src="js/views/preview.js"></script>
-		<script src="js/views/design.js"></script>
-		<script src="js/views/app.js"></script>
-		<!-- Application -->
-		<script src="js/app.js"></script>
-		<!-- Router -->
-		<script src="js/routes/routes.js"></script>
+	<!-- Models -->
+	<script src="js/models/chart.js"></script>
+	<script src="js/models/library.js"></script>
+	<!-- Views -->
+	<script src="js/views/chart.js"></script>
+	<script src="js/views/chart-edit.js"></script>
+	<script src="js/views/library.js"></script>
+	<script src="js/views/preview.js"></script>
+	<script src="js/views/design.js"></script>
+	<script src="js/views/app.js"></script>
+	<!-- Application -->
+	<script src="js/app.js"></script>
+	<!-- Router -->
+	<script src="js/routes/routes.js"></script>
 
-<script type="text/javascript">
-		$(document).foundation(); 
+	<script type="text/javascript">
+		$(document).foundation({
+			abide: {
+				patterns:{
+					guid: /^\{[a-zA-Z0-9]{8}\-[a-zA-Z0-9]{4}\-[a-zA-Z0-9]{4}\-[a-zA-Z0-9]{4}\-[a-zA-Z0-9]{8}\}$/
+				}
+			}
+		}); 
 	</script>
 	
 	</body>

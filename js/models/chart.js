@@ -2,10 +2,19 @@ var app = app || {};
 
 app.Chart = Backbone.Model.extend({
     defaults: {
-        title: 'N/A',
-        settings_guid: 'N/A',
-        list_guid: 'N/A',
-        type: 'n/a',
-        rank: '1'
+        title: '',
+        url: '',
+        list_guid: '',
+        type: '',
+        rank: '1',
+        data: [],
+        label_one: {
+        	title: '',
+        	units: ''
+        },
+        label_two: {
+        	title: '',
+        	units: ''
+        }
     }
 });
