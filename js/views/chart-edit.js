@@ -83,12 +83,69 @@ app.ChartEditView = Backbone.View.extend({
         });
     },
 
-    processData: function(data) {
-    	console.log(data);
+   updateListItems: function(url, soap_env, callback){
+	   var results = [];
+
+
+        $.ajax({
+            url: url + "/_vti_bin/lists.asmx",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('SOAPAction', 'http://schemas.microsoft.com/sharepoint/soap/UpdateListItems');
+            },
+            type: "POST",
+            dataType: "xml",
+            data: soap_env,
+            tryCount: 3,
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                printError(XMLHttpRequest, textStatus, errorThrown)
+                this.tryCount++;
+                if (this.tryCount <= this.retryLimit) {
+                    //try again
+                    $.ajax(this);
+                    return;
+                } else if (callback) {
+                    callback(textStatus);
+                }
+            },
+            complete: function (xData, status) {
+                 results = $(xData.responseText).find('z\\:row');
+
+                if (callback) {
+                    callback(results);
+                }
+            },
+            contentType: 'text/xml; charset="utf-8"'
+        });
+	},
+
+
+
+    processData: function(results) {
+    	var data = [],
+    		attrObj = {},
+    		i, j, 
+    		chart = this.model;
+
+
+    	//repackage data into an array which each index
+    	//is an object with key value pairs
+    	for (i = 0; i < results.length; i++){
+    		attrObj = {};
+    		for (j = 0; j < results[i].length; j++){
+    			attrObj[results[i].attributes.name] = results[i].attributes.value;
+			}
+			data.push(attrObj);
+    	}
+
+    	chart.set('data', data);
     },
 
     printError: function(XMLHttpRequest, textStatus, errorThrown) {
 		console.log(XMLHttpRequest + '\n' + textStatus + '\n' + errorThrown);
+	},
+
+	save: function(){
+		saveListItems();
 	},
 
 	onSaveChartClick: function( e ) {
@@ -128,7 +185,7 @@ app.ChartEditView = Backbone.View.extend({
 
 		//make a web service on an the provided list guid
 		var list_guid = this.model.get('list_guid'),
-			url = this.model.get('url'); 
+			url = this.model.get('url');
 
 		this.getListItems(url, list_guid, app.config.type_map.list, this.processData);
 	},
