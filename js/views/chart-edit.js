@@ -61,7 +61,7 @@ app.ChartEditView = Backbone.View.extend({
             data: soapEnv,
             tryCount: app.config.tryCount,
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                printError(XMLHttpRequest, textStatus, errorThrown);
+                this.printError(XMLHttpRequest, textStatus, errorThrown);
                 this.tryCount++;
                 if (this.tryCount <= this.retryLimit) {
                     //try again
@@ -97,7 +97,7 @@ app.ChartEditView = Backbone.View.extend({
             data: soap_env,
             tryCount: 3,
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                printError(XMLHttpRequest, textStatus, errorThrown)
+                this.printError(XMLHttpRequest, textStatus, errorThrown)
                 this.tryCount++;
                 if (this.tryCount <= this.retryLimit) {
                     //try again
@@ -145,7 +145,9 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	save: function(){
-		saveListItems();
+		this.updateListItems(url, soap_env, function(){
+			alert('Save Complete!');
+		});
 	},
 
 	onSaveChartClick: function( e ) {
