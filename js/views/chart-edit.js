@@ -18,7 +18,7 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	render: function () {
-		var type = this.model.get('type'),
+		var type = this.model.get('type');
 		this.$el.html(this.template((this.model ? this.model.toJSON() : {})));
 		this.$menu = this.$('#menu');
 		this.$fetchBtn = this.$('#fetchBtn');
@@ -81,7 +81,7 @@ app.ChartEditView = Backbone.View.extend({
             },
             contentType: 'text/xml; charset="utf-8"'
         });
-    };
+    },
 
     processData: function(data) {
     	console.log(data);
