@@ -55,9 +55,7 @@
      <div class="row workArea">
 			<div class="small-12 columns">
 				<section id="chart-edit">
-					<div id="info-bar">
-						
-					</div>
+					<div id="info-bar"></div>
 					<div id="preview"></div>
 				</section>
 			</div>
@@ -81,7 +79,7 @@
 			<div class="row">
 				<div class="small-12 medium-6 large-6 columns">
 					<div class="text-field">
-						<label>Title <small>required</small>
+						<label>Title<small class="required">required</small>
 							<input type="text" id="title" value="<%=title%>" placeholder="Your Chart Title" required patter="[a-zA-Z0-9]+"/>
 						</label>
 						<small class="error">Title is required and must be a string.</small>
@@ -89,7 +87,7 @@
 				</div>
 				<div class="small-12 medium-6 large-6 columns">
 					<div class="text-field">
-						<label>Chart Type <small>required</small>
+						<label>Chart Type<small class="required">required</small>
 							<select id="type" required>
 								<option value="">N/A</option>
 								<option value="Bar" data-class="bar">Bar</option>
@@ -107,7 +105,7 @@
 			<div class="row">
 				<div class="small-12 medium-6 large-6 columns">
 					<div class="text-field">
-						<label>URL <small>required</small>
+						<label>URL<small class="required">required</small>
 							<input type="url" id="url" value="<%=url%>" placeholder="https://example.com or http://example.com" required pattern="https?://.+" />
 						</label>
 						<small class="error">URL is required and must be a valid URL.</small>
@@ -115,13 +113,15 @@
 				</div>
 				<div class="small-12 medium-6 large-6 columns">
 					<div class="text-field">
-						<label>List GUID
+						<label>List GUID<small class="required">required</small>
 						<input type="text" id="list_guid" value="<%=list_guid%>" placeholder="{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX}" required pattern="guid"/>
 						<small class="error">List GUID is required and must be a valid GUID.</small>
 						</label>
 					</div>
 				</div>
 			</div>
+
+			<div id="settings" class="row"></div>
 		</form>
 	</script>
 
@@ -147,8 +147,131 @@
 		<p>You don't seem to have any charts :(</p>
 		<p>Let's try adding some!</p>
 	</script>
-	
 
+	<script type="text/template" id="bar_template">
+		<div class="small-12 medium-6 large-6 columns">
+			<div class="text-field">
+				<label>Data Column<small class="required">required</small>
+					<select class="data-column" id="dataColumn" required>
+						<option value="">N/A</option>
+					</select>
+				</label>
+				<small class="error">Data Column is required and must be something other than N/A.</small>
+			</div>
+		</div>
+		<div class="small-12 medium-6 large-6 columns">
+			<div class="text-field">
+				<label>Name Column<small class="required">required</small>
+					<select class="data-column" id="nameColumn" required>
+						<option value="">N/A</option>
+					</select>
+				</label>
+				<small class="error">Name Column is required and must be something other than N/A.</small>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/template" id="horizontal_bar_template">
+		<div class="small-12 medium-6 large-6 columns">
+			<div class="text-field">
+				<label>Data Column<small class="required">required</small>
+					<select class="data-column" id="dataColumn1" required>
+						<option value="">N/A</option>
+					</select>
+				</label>
+				<small class="error">Data Column is required and must be something other than N/A.</small>
+			</div>
+		</div>
+		<div class="small-12 medium-6 large-6 columns">
+			<div class="text-field">
+				<label>Name Column<small class="required">required</small>
+					<select class="data-column" id="nameColumn" required>
+						<option value="">N/A</option>
+					</select>
+				</label>
+				<small class="error">Name Column is required and must be something other than N/A.</small>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/template" id="line_template">
+		<div class="small-12 medium-6 large-6 columns">
+			<div class="text-field">
+				<label>X Axis<small class="required">required</small>
+					<select class="data-column" id="nameColumn" required>
+						<option value="">N/A</option>
+					</select>
+				</label>
+				<small class="error">X Axis is required and must be something other than N/A.</small>
+			</div>
+		</div>
+		<div class="small-12 medium-6 large-6 columns">
+			<div class="text-field">
+				<label>Y Axis<small class="required">required</small>
+					<select class="data-column" id="dataColumn1" required>
+						<option value="">N/A</option>
+					</select>
+				</label>
+				<small class="error">Y Axis is required and must be something other than N/A.</small>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/template" id="pie_template">
+		<div class="small-12 medium-6 large-6 columns">
+			<div class="text-field">
+				<label>Data Column<small class="required">required</small>
+					<select class="data-column" id="dataColumn1" required>
+						<option value="">N/A</option>
+					</select>
+				</label>
+				<small class="error">Data Column is required and must be something other than N/A.</small>
+			</div>
+		</div>
+		<div class="small-12 medium-6 large-6 columns">
+			<div class="text-field">
+				<label>Name Column<small class="required">required</small>
+					<select class="data-column" id="nameColumn" required>
+						<option value="">N/A</option>
+					</select>
+				</label>
+				<small class="error">Name Column is required and must be something other than N/A.</small>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/template" id="dot_template">
+			<div class="small-12 medium-4 large-4 columns">
+				<div class="text-field">
+					<label>Data Column 1<small class="required">required</small>
+						<select class="data-column" id="dataColumn1" required>
+							<option value="">N/A</option>
+						</select>
+					</label>
+					<small class="error">Data Column is required and must be something other than N/A.</small>
+				</div>
+			</div>
+			<div class="small-12 medium-4 large-4 columns">
+				<div class="text-field">
+					<label>Data Column 2<small class="required">required</small>
+						<select class="data-column" id="dataColumn2" required>
+							<option value="">N/A</option>
+						</select>
+					</label>
+					<small class="error">Data Column is required and must be something other than N/A.</small>
+				</div>
+			</div>
+			<div class="small-12 medium-4 large-4 columns">
+				<div class="text-field">
+					<label>Name Column<small class="required">required</small>
+						<select class="data-column" id="nameColumn" required>
+							<option value="">N/A</option>
+						</select>
+					</label>
+					<small class="error">Name Column is required and must be something other than N/A.</small>
+				</div>
+			</div>
+		</script>
 	<!-- Models -->
 	<script src="js/models/chart.js"></script>
 	<script src="js/models/library.js"></script>

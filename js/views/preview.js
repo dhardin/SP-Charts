@@ -13,8 +13,7 @@ app.PreviewView = Backbone.View.extend({
 	
 
 	render: function () {
-		// Creates canvas 640 × 480 at 10, 50
-		
+	
 			 _.defer(_.bind(function() {  
 			 	var width = this.$el.width(),
 			 		height = this.$el.parent().height(),	
@@ -71,6 +70,9 @@ app.PreviewView = Backbone.View.extend({
 					case 'dot':
 						//life, expectancy, country and spending per capita (fictional data)
 						this.graph.dotchart(0, 0, width, height, [76, 70, 67, 71, 69], [0, 1, 2, 3, 4], [100, 120, 140, 160, 500], {max: 10, axisylabels: ['Mexico', 'Argentina', 'Cuba', 'Canada', 'United States of America'], heat: true, axis: '0 0 1 1'})
+						break;
+					default:
+						this.graph.clear();
 						break;
 				}
 					$(this.graph.canvas).find('text').attr('font', '100px Arial, sans-serif');

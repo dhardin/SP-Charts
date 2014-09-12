@@ -8,8 +8,13 @@ app.DesignView = Backbone.View.extend({
 		'keyup #search': 'onSearch'
 	},
 	initialize: function (options) {
-		this.chart_id = options.chart_id || false;
+
 		this.libraryView =  new app.LibraryView();
+		this.chart_id = (typeof this.libraryView.collection.get({cid: options.chart_id}) !== 'undefined' ? options.chart_id : false);
+		
+		if (!this.chart_id){
+			app_router.navigate('edit/', { trigger: true });
+		}
 		
 
 		this.on('renderComplete', this.onRenderComplete);
@@ -39,7 +44,8 @@ app.DesignView = Backbone.View.extend({
 		this.chartView = new app.ChartEditView({
 			model: chart
 		});
-this.listenTo(this.chartView, 'chart-change', this.onChartChange);
+
+		this.listenTo(this.chartView, 'chart-change', this.onChartChange);
 		this.previewView = new app.PreviewView({model: chart});
 
 		this.libraryView.setElement(this.$chart_collection);

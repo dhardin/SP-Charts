@@ -74,4 +74,13 @@
 			border: 1px solid #00ffdd;
 		}
 
+		.required {
+			margin-left: 10px;
+			color: #ff0000;
+		}
 
+		.list-item-type {
+			float: right;
+			margin-right: 10px;
+			color: #dd0000;
+		}

@@ -15,6 +15,8 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	initialize: function(){
+		this.tryCount = 0;
+		this.retryLimit = 3;
 	},
 
 	render: function () {
@@ -23,6 +25,8 @@ app.ChartEditView = Backbone.View.extend({
 		this.$menu = this.$('#menu');
 		this.$fetchBtn = this.$('#fetchBtn');
 		this.$saveBtn = this.$('#saveBtn');
+		this.$settings = this.$('#settings');
+
 
 
 		
@@ -32,7 +36,9 @@ app.ChartEditView = Backbone.View.extend({
 		this.$select = this.$('#type');
 		this.$list_guid = this.$('#list_guid');
 		this.$url = this.$('#url');
-		this.$select.val(type)
+		this.$select.val(type);
+		this.changeSettings(type);
+		this.populateColumnData();
 		return this;
 	},
 
@@ -59,7 +65,7 @@ app.ChartEditView = Backbone.View.extend({
             type: "POST",
             dataType: "xml",
             data: soapEnv,
-            tryCount: app.config.tryCount,
+            tryCount: this.tryCount,
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 this.printError(XMLHttpRequest, textStatus, errorThrown);
                 this.tryCount++;
@@ -72,7 +78,7 @@ app.ChartEditView = Backbone.View.extend({
                 }
             },
             complete: function (xData, status) {
-                var responseProperty = (type == app.config.type_map.document_library ? 'responseText' : 'responseXML'),
+                var responseProperty = (type == 'documentLibrary' ? 'responseText' : 'responseXML'),
                  results = $(xData[responseProperty]).find('z\\:row');
 
                 if (callback) {
@@ -118,12 +124,41 @@ app.ChartEditView = Backbone.View.extend({
         });
 	},
 
+	populateColumnData: function(){
+		var data = this.model.get('data'),
+			that = this,
+			key,
+			$options = $('<select></select>');
+
+			//populate select with every column in data obj
+			//we only need to use the first object properties as a 
+			//reference for the rest
+			for (key in data[0]){
+				$options.append($('<option value="' + key + '">' + key + '</option>'));
+			}
+
+		//populate each of the select columns with the fetched data
+		$( '#info-bar' ).find( '.data-column' ).each( function( i, el ) {
+				 $( el ).append($options.find('option'))
+				 		.val(that.model.get(el.id));
+		});
+	},
+
+	changeSettings: function(type){
+		if (!type || type.length == 0){
+			this.$settings.html('');
+		}
+		type = type.replace(' ', '_');
+		type = type.toLowerCase();
+		this.$settings.html($('#' + type + '_template').html());
+	},
+
 
 
     processData: function(results) {
     	var data = [],
     		attrObj = {},
-    		i, j, 
+    		i, j, attribute,
     		chart = this.model;
 
 
@@ -131,8 +166,9 @@ app.ChartEditView = Backbone.View.extend({
     	//is an object with key value pairs
     	for (i = 0; i < results.length; i++){
     		attrObj = {};
-    		for (j = 0; j < results[i].length; j++){
-    			attrObj[results[i].attributes.name] = results[i].attributes.value;
+    		for (j = 0; j < results[i].attributes.length; j++){
+    			attribute = results[i].attributes[j];
+    			attrObj[attribute.name] = attribute.value;
 			}
 			data.push(attrObj);
     	}
@@ -144,22 +180,19 @@ app.ChartEditView = Backbone.View.extend({
 		console.log(XMLHttpRequest + '\n' + textStatus + '\n' + errorThrown);
 	},
 
-	save: function(){
-		this.updateListItems(url, soap_env, function(){
+	save: function(options){
+		/*this.updateListItems(url, soap_env, function(){
 			alert('Save Complete!');
-		});
-	},
-
-	onSaveChartClick: function( e ) {
-		e.preventDefault();
-		var formData = {}, chart,
+		});*/
+		var formData = options.formData || {},
+			callback = options.callback, chart,
 		data;
 
 
 		$( '#info-bar' ).find( 'input, select' ).each( function( i, el ) {
-			if( $( el ).val() != '' ){
+		//	if( $( el ).val() != '' ){
 				formData[ el.id ] = $( el ).val();
-			}
+		//	}
 		});
 
 		chart = this.model;
@@ -174,7 +207,15 @@ app.ChartEditView = Backbone.View.extend({
 		}
  
 		app_router.navigate('edit/' + this.model.cid, { trigger: true });
-	
+
+		if(callback){
+			callback();
+		}
+	},
+
+	onSaveChartClick: function(e) {
+		e.preventDefault();
+		save();
 	},
 
 	onNewBtnClick: function (e) {
@@ -182,20 +223,35 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	onFetchBtnClick: function (e){
-		//trigger chart save btn click
-		this.$saveBtn.click();
+		this.save({
+			formData: {
+				list_guid: this.$list_guid.val(),
+				url: this.$url.val()
+			}
+		});
 
 		//make a web service on an the provided list guid
 		var list_guid = this.model.get('list_guid'),
-			url = this.model.get('url');
+			url = this.model.get('url'),
+			that = this;
 
-		this.getListItems(url, list_guid, app.config.type_map.list, this.processData);
+		this.getListItems(url, list_guid, app.config.type_map.list, function(results){
+			that.processData.call(that, results);
+		});
+		
+
+		
 	},
 
 	onSelectChange: function(e){
-		//trigger chart save btn click
-		this.$saveBtn.click();
-		this.trigger('chart-change');
+		var type = this.$select.val(),
+		that = this;
+		this.changeSettings(type);
+		this.populateColumnData();
+		this.save({
+			callback: function(){that.trigger('chart-change');}
+		});
+		
 	},
 
 	onInputFieldChange: function(e){

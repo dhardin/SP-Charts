@@ -8,6 +8,9 @@ app.Chart = Backbone.Model.extend({
         type: '',
         rank: '1',
         data: [],
+        dataColumn1: '',
+        dataColumn2: '',
+        nameColumn: '',
         label_one: {
         	title: '',
         	units: ''
