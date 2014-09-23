@@ -20,7 +20,7 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	render: function () {
-		var type = this.model.get('type');
+		var type = this.model.get('chartType');
 		this.$el.html(this.template((this.model ? this.model.toJSON() : {})));
 		this.$menu = this.$('#menu');
 		this.$fetchBtn = this.$('#fetchBtn');
@@ -33,7 +33,7 @@ app.ChartEditView = Backbone.View.extend({
 		//initialize and bind events to the menu plugin
 		this.$menu.menu();
  
-		this.$select = this.$('#type');
+		this.$select = this.$('#chartType');
 		this.$list_guid = this.$('#list_guid');
 		this.$url = this.$('#url');
 		this.$select.val(type);
@@ -189,9 +189,11 @@ app.ChartEditView = Backbone.View.extend({
 			trigger = (typeof options.trigger !== 'undefined' ? options.trigger : true),
 		data;
 
-		$( '#info-bar' ).find( 'input, select' ).each( function( i, el ) {
-				formData[ el.id ] = $( el ).val();
-		});
+		if (Object.keys(formData).length === 0){
+			$( '#info-bar' ).find( 'input, select' ).each( function( i, el ) {
+					formData[ el.id ] = $( el ).val();
+			});
+		}
 
 		chart = this.model;
 
@@ -257,9 +259,9 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	onSelectChange: function(e){
-		var type = this.$select.val(),
+		var chartType = this.$select.val(),
 		that = this;
-		this.changeSettings(type);
+		this.changeSettings(chartType);
 		this.populateColumnData();
 		this.save({
 			formData: {

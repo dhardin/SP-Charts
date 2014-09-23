@@ -7,6 +7,7 @@ app.Chart = Backbone.Model.extend({
         list_name: '',
         site: '',
         type: '',
+        chartType: '',
         rank: '1',
         data: [],
         dataColumn1: '',
