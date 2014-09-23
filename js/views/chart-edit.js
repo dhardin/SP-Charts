@@ -228,7 +228,7 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	onFetchBtnClick: function (e){
-		parseSPUrl(this.$url.val(), function(result){
+		this.parseSPUrl(this.$url.val(), function(result){
 			this.save({
 				formData: {
 					list_name: result.title,
