@@ -166,7 +166,7 @@ app.ChartEditView = Backbone.View.extend({
     	//is an object with key value pairs
     	for (i = 0; i < results.length; i++){
     		attrObj = {};
-    		if(!results[i].hasOwnProperty('attributes')){
+    		if(!results[i].attributes){
     			continue;
     		}
     		for (j = 0; j < results[i].attributes.length; j++){
