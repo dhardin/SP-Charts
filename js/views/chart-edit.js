@@ -228,11 +228,12 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	onFetchBtnClick: function (e){
+		var that = this;
 		this.parseSPUrl(this.$url.val(), function(result){
-			this.save({
+			that.save({
 				formData: {
 					list_name: result.title,
-					url: this.site + (this.type == 'lists' ? 'lists/' + this.title + '/' : this.title + '/forms/'),
+					url: result.site + (result.type == 'lists' ? 'lists/' + result.title + '/' : result.title + '/forms/'),
 					site: result.site
 				},
 				trigger: false
