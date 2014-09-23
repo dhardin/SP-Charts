@@ -5,7 +5,8 @@ var Router = Backbone.Router.extend({
 		'': 'editChart',
 		'main': 'main',
 		'edit': 'editChart',
-		'edit/:id': 'editChart'
+		'edit/:id': 'editChart',
+		'edit/*': 'editChart'
 	},
 
 	 initialize: function(options){

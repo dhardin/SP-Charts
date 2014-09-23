@@ -44,7 +44,7 @@ app.ChartEditView = Backbone.View.extend({
 
 
     getListItems: function(url, guid, type, callback) {
-        var results = [], soapEnv, body;
+        var results = [], soapEnv, body,   that = this;
 
         soapEnv =
             '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
@@ -67,11 +67,11 @@ app.ChartEditView = Backbone.View.extend({
             data: soapEnv,
             tryCount: this.tryCount,
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                this.printError(XMLHttpRequest, textStatus, errorThrown);
-                this.tryCount++;
-                if (this.tryCount <= this.retryLimit) {
+                that.printError(XMLHttpRequest, textStatus, errorThrown);
+                that.tryCount++;
+                if (that.tryCount <= that.retryLimit) {
                     //try again
-                    $.ajax(this);
+                    $.ajax(that);
                     return;
                 } else if (callback) {
                     callback(textStatus);
@@ -90,8 +90,8 @@ app.ChartEditView = Backbone.View.extend({
     },
 
    updateListItems: function(url, soap_env, callback){
-	   var results = [];
-
+	   var results = [],
+	   that = this;
 
         $.ajax({
             url: url + "/_vti_bin/lists.asmx",
@@ -103,9 +103,9 @@ app.ChartEditView = Backbone.View.extend({
             data: soap_env,
             tryCount: 3,
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                this.printError(XMLHttpRequest, textStatus, errorThrown)
-                this.tryCount++;
-                if (this.tryCount <= this.retryLimit) {
+                that.printError(XMLHttpRequest, textStatus, errorThrown);
+                that.tryCount++;
+                if (that.tryCount <= that.retryLimit) {
                     //try again
                     $.ajax(this);
                     return;
@@ -156,7 +156,7 @@ app.ChartEditView = Backbone.View.extend({
 
 
     processData: function(results) {
-    	var data = [],
+    	var data = [{}],
     		attrObj = {},
     		i, j, attribute,
     		chart = this.model;
@@ -166,6 +166,9 @@ app.ChartEditView = Backbone.View.extend({
     	//is an object with key value pairs
     	for (i = 0; i < results.length; i++){
     		attrObj = {};
+    		if(!results[i].hasOwnProperty('attributes')){
+    			continue;
+    		}
     		for (j = 0; j < results[i].attributes.length; j++){
     			attribute = results[i].attributes[j];
     			attrObj[attribute.name] = attribute.value;
@@ -181,22 +184,16 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	save: function(options){
-		/*this.updateListItems(url, soap_env, function(){
-			alert('Save Complete!');
-		});*/
 		var formData = options.formData || {},
 			callback = options.callback, chart,
+			trigger = (typeof options.trigger !== 'undefined' ? options.trigger : true),
 		data;
 
-
 		$( '#info-bar' ).find( 'input, select' ).each( function( i, el ) {
-		//	if( $( el ).val() != '' ){
 				formData[ el.id ] = $( el ).val();
-		//	}
 		});
 
 		chart = this.model;
-		
 
 		if (!app.LibraryCollection.get({cid: this.model.cid})){
 			formData['rank'] = app.LibraryCollection.length + 1;
@@ -205,8 +202,16 @@ app.ChartEditView = Backbone.View.extend({
 		} else {
 			chart.set(formData);
 		}
+
+		/*
+		this.updateListItems(url, soap_env, function(){
+			alert('Save Complete!');
+		});
+		*/
  
-		app_router.navigate('edit/' + this.model.cid, { trigger: true });
+ 		if(trigger){
+			app_router.navigate('edit/' + this.model.cid, { trigger: true });
+		}
 
 		if(callback){
 			callback();
@@ -223,19 +228,24 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	onFetchBtnClick: function (e){
-		this.save({
-			formData: {
-				list_guid: this.$list_guid.val(),
-				url: this.$url.val()
-			}
+		parseSPUrl(this.$url.val(), function(result){
+			this.save({
+				formData: {
+					list_name: result.title,
+					url: this.site + (this.type == 'lists' ? 'lists/' + this.title + '/' : this.title + '/forms/'),
+					site: result.site
+				},
+				trigger: false
+			});
 		});
+		
 
 		//make a web service on an the provided list guid
-		var list_guid = this.model.get('list_guid'),
-			url = this.model.get('url'),
+		var list_name = this.model.get('list_name'),
+			url = this.model.get('site'),
 			that = this;
 
-		this.getListItems(url, list_guid, app.config.type_map.list, function(results){
+		this.getListItems(url, list_name, 'list', function(results){
 			that.processData.call(that, results);
 		});
 		
@@ -249,6 +259,11 @@ app.ChartEditView = Backbone.View.extend({
 		this.changeSettings(type);
 		this.populateColumnData();
 		this.save({
+			formData: {
+				dataColumn1: '',
+				dataColumn2: '',
+				nameColumn: ''
+			},
 			callback: function(){that.trigger('chart-change');}
 		});
 		
@@ -266,6 +281,47 @@ app.ChartEditView = Backbone.View.extend({
 		} else{
 			this.$fetchBtn.addClass('disabled');
 		}
-	}
+	},
+
+	parseSPUrl: function(url, callback){
+			if (!url){
+				return;
+			}
+
+			var result = {site: 'N/A', title: 'N/A', type: 'N/A'},
+				listPathIndex = url.toLowerCase().indexOf('lists'), 
+				formsPathIndex = url.toLowerCase().indexOf('forms'), 
+				titleStartIndex = -1, titleEndIndex = -1,
+				tempUrl = '';
+
+			
+
+
+				//parse out the site from the url
+			if(listPathIndex > -1){
+				//parse out the title of the list or library from the url
+				titleEndIndex = (url.lastIndexOf('/') < url.length - 1 ? url.length  : url.lastIndexOf('/'));
+				tempUrl = url.substr(0, titleEndIndex);
+				titleStartIndex = tempUrl.lastIndexOf('/') + 1;
+
+				result.title = tempUrl.substr(titleStartIndex, titleEndIndex);
+				result.site = url.substr(0, listPathIndex);
+				result.type = 'List';
+
+			} else if (formsPathIndex > -1){
+				//parse out the title of the list or library from the url
+				titleEndIndex = formsPathIndex - 1;
+				tempUrl = url.substr(0, titleEndIndex);
+				titleStartIndex = tempUrl.lastIndexOf('/') + 1;
+
+				result.title = tempUrl.substr(titleStartIndex, titleEndIndex);
+				result.site = tempUrl.substr(0, titleStartIndex);
+				result.type = 'Document Library';
+			} 
+
+			if(callback){
+				callback(result);
+			}
+		}
 
 });

@@ -7,6 +7,17 @@ charts = [
 		url: '',
 		type: 'Bar',
 		rank: '1',
+		data: [
+			{team: 'A', miles: 103},
+			{team: 'B', miles: 234},
+			{team: 'C', miles: 451},
+			{team: 'D', miles: 144},
+			{team: 'E', miles: 74},
+			{team: 'F', miles: 231},
+			],
+        dataColumn1: 'miles',
+        dataColumn2: '',
+        nameColumn: 'team',
 	},
 	{
 		title: 'Chart 2',

@@ -8,6 +8,7 @@ app.DesignView = Backbone.View.extend({
 		'keyup #search': 'onSearch'
 	},
 	initialize: function (options) {
+		var that = this;
 
 		this.libraryView =  new app.LibraryView();
 		this.chart_id = (typeof this.libraryView.collection.get({cid: options.chart_id}) !== 'undefined' ? options.chart_id : false);
@@ -18,7 +19,12 @@ app.DesignView = Backbone.View.extend({
 		
 
 		this.on('renderComplete', this.onRenderComplete);
-
+		this.libraryView.collection.on('change:data', function(model, data){
+			console.log(JSON.stringify(data));
+		});
+		this.libraryView.collection.on('change:type', function(model, type){
+			that.previewView.trigger('chart-change', model);
+		});
 
 	},
 
@@ -51,7 +57,7 @@ app.DesignView = Backbone.View.extend({
 		this.libraryView.setElement(this.$chart_collection);
 		this.chartView.setElement(this.$info_bar);
 		this.previewView.setElement(this.$preview);
-		this.previewView.render();
+		this.previewView.render(chart);
 		this.libraryView.render();
 		this.chartView.render();	
 
@@ -60,10 +66,6 @@ app.DesignView = Backbone.View.extend({
       		collapsible: true,
       		heightStyle: "content" 
     	 });
-	},
-
-	onChartChange: function(e){
-		this.previewView.trigger('chart-change');
 	},
 
 	onSearch: function(e){

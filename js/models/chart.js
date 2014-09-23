@@ -4,7 +4,8 @@ app.Chart = Backbone.Model.extend({
     defaults: {
         title: '',
         url: '',
-        list_guid: '',
+        list_name: '',
+        site: '',
         type: '',
         rank: '1',
         data: [],
