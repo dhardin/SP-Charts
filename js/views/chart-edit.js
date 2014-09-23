@@ -301,7 +301,7 @@ app.ChartEditView = Backbone.View.extend({
 				//parse out the site from the url
 			if(listPathIndex > -1){
 				//parse out the title of the list or library from the url
-				titleEndIndex = (url.lastIndexOf('/') < url.length - 1 ? url.length  : url.lastIndexOf('/'));
+				titleEndIndex = (url.lastIndexOf('/') < url.length - 1 ? url.lastIndexOf('/') : url.length);
 				tempUrl = url.substr(0, titleEndIndex);
 				titleStartIndex = tempUrl.lastIndexOf('/') + 1;
 
