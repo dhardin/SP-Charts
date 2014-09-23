@@ -5,7 +5,7 @@ charts = [
 		title: 'Chart 1',
 		list_guid: '',
 		url: '',
-		type: 'Bar',
+		chartType: 'Bar',
 		rank: '1',
 		data: [
 			{team: 'A', miles: 103},
@@ -23,14 +23,14 @@ charts = [
 		title: 'Chart 2',
 		list_guid: '',
 		url: '',
-		type: 'Dot',
+		chartType: 'Dot',
 		rank: '2'
 	},
 	{
 		title: 'Chart 3',
 		list_guid: '',
 		url: '',
-		type: 'Pie',
+		chartType: 'Pie',
 		rank: '3'
 	}
 ];

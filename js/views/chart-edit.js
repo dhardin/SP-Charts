@@ -222,7 +222,7 @@ app.ChartEditView = Backbone.View.extend({
 
 	onSaveChartClick: function(e) {
 		e.preventDefault();
-		save();
+		this.save();
 	},
 
 	onNewBtnClick: function (e) {

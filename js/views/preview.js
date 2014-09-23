@@ -24,7 +24,7 @@ app.PreviewView = Backbone.View.extend({
 				data_col1 = model.get('dataColumn1'),
 				data_col2 = model.get('dataColumn2'),
 				name_col = model.get('nameColumn'),
-				type = model.get('type').toLowerCase() || '',
+				chartType = model.get('chartType').toLowerCase() || '',
 				legend_arr = [], i,
 				data_arr1 = this.extractDataArr(data, data_col1),
 				data_arr2 = this.extractDataArr(data, data_col2),
@@ -42,7 +42,7 @@ app.PreviewView = Backbone.View.extend({
 				this.graph.setSize('100%', '100%');
 				
 
-				switch(type){
+				switch(chartType){
 					case 'pie':
 						if (data_arr1.length == 0){
 							data_arr1 = [1,3,9,16,25];
