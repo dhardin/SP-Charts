@@ -78,7 +78,7 @@ app.ChartEditView = Backbone.View.extend({
                 }
             },
             complete: function (xData, status) {
-                var responseProperty = (type == 'documentLibrary' ? 'responseText' : 'responseXML'),
+                var responseProperty = (type == 'document library' ? 'responseXML' : 'responseText'),
                  results = $(xData[responseProperty]).find('z\\:row');
 
                 if (callback) {
@@ -234,7 +234,8 @@ app.ChartEditView = Backbone.View.extend({
 				formData: {
 					list_name: result.title,
 					url: result.site + (result.type == 'lists' ? 'lists/' + result.title + '/' : result.title + '/forms/'),
-					site: result.site
+					site: result.site,
+					type: result.type
 				},
 				trigger: false
 			});
@@ -244,9 +245,10 @@ app.ChartEditView = Backbone.View.extend({
 		//make a web service on an the provided list guid
 		var list_name = this.model.get('list_name'),
 			url = this.model.get('site'),
+			type = this.model.get('type'),
 			that = this;
 
-		this.getListItems(url, list_name, 'list', function(results){
+		this.getListItems(url, list_name, type, function(results){
 			that.processData.call(that, results);
 		});
 		
@@ -307,7 +309,7 @@ app.ChartEditView = Backbone.View.extend({
 
 				result.title = tempUrl.substr(titleStartIndex, titleEndIndex);
 				result.site = url.substr(0, listPathIndex);
-				result.type = 'List';
+				result.type = 'list';
 
 			} else if (formsPathIndex > -1){
 				//parse out the title of the list or library from the url
@@ -317,7 +319,7 @@ app.ChartEditView = Backbone.View.extend({
 
 				result.title = tempUrl.substr(titleStartIndex, titleEndIndex);
 				result.site = tempUrl.substr(0, titleStartIndex);
-				result.type = 'Document Library';
+				result.type = 'document library';
 			} 
 
 			if(callback){
