@@ -22,7 +22,7 @@ app.DesignView = Backbone.View.extend({
 		this.libraryView.collection.on('change:data', function(model, data){
 			console.log(JSON.stringify(data));
 		});
-		this.libraryView.collection.on('change:type', function(model, type){
+		this.libraryView.collection.on('change:chartType', function(model, type){
 			that.previewView.trigger('chart-change', model);
 		});
 
