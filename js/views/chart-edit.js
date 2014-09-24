@@ -9,7 +9,7 @@ app.ChartEditView = Backbone.View.extend({
 		'click #saveBtn':'onSaveChartClick',
 		'click #newBtn': 'onNewBtnClick',
 		'click #fetchBtn': 'onFetchBtnClick',
-		'change #type': 'onSelectChange',
+		'change #chartType': 'onSelectChange',
 		'keyup #list_guid': 'onInputFieldChange',
 		'keyup #url': 'onInputFieldChange'
 	},
