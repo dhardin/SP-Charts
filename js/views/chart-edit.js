@@ -231,6 +231,11 @@ app.ChartEditView = Backbone.View.extend({
 
 	onFetchBtnClick: function (e){
 		var that = this;
+		
+		if(this.$fetchBtn.hasClass('disabled')){
+			return;
+		}
+
 		this.parseSPUrl(this.$url.val(), function(result){
 			that.save({
 				formData: {
@@ -275,13 +280,12 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	onInputFieldChange: function(e){
-		var regexGUID = /^\{[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}\}$/i,
-			regexURL = /https?:\/\/.+/,
+		var regexURL = /https?:\/\/.+/,
 			guidVal = this.$list_guid.val(),
 			urlVal = this.$url.val();
 
 
-		if(regexGUID.test(guidVal) && regexURL.test(urlVal)){
+		if(regexURL.test(urlVal)){
 			this.$fetchBtn.removeClass('disabled');
 		} else{
 			this.$fetchBtn.addClass('disabled');

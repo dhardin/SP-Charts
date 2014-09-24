@@ -34,13 +34,9 @@ app.ChartView = Backbone.View.extend({
 		this.$el.trigger('update-sort', [this.model, index]);
 	},
 
-
 	render: function () {
 		this.$el.html(this.template(this.model.toJSON()));
 
 		return this;
 	}
-
-
-
 });
