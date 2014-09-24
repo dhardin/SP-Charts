@@ -125,6 +125,7 @@ app.ChartEditView = Backbone.View.extend({
 	populateColumnData: function(){
 		var data = this.model.get('data'),
 			that = this,
+			chart_type = this.model.get('chart_type'),
 			key,
 			$options = $('<select></select>');
 
@@ -137,9 +138,16 @@ app.ChartEditView = Backbone.View.extend({
 
 		//populate each of the select columns with the fetched data
 		$( '#info-bar' ).find( '.data-column' ).each( function( i, el ) {
-				 $( el ).append($options.find('option'))
+				 $( el ).append($options.find('option').clone())
 				 		.val(that.model.get(el.id));
 		});
+
+		switch (chart_type){
+			case 'dot':
+				break;
+			default: 
+
+		}
 	},
 
 	changeSettings: function(type){
