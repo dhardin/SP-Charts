@@ -185,8 +185,9 @@ app.ChartEditView = Backbone.View.extend({
 	},
 
 	save: function(options){
+		options = options || {};
 		var formData = options.formData || {},
-			callback = options.callback, chart,
+			callback = options.callback || false, chart,
 			trigger = (typeof options.trigger !== 'undefined' ? options.trigger : true),
 		data;
 
