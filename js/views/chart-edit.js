@@ -39,6 +39,7 @@ app.ChartEditView = Backbone.View.extend({
 		this.$select.val(type);
 		this.changeSettings(type);
 		this.populateColumnData();
+		this.$url.trigger('keyup');
 		return this;
 	},
 
@@ -231,7 +232,7 @@ app.ChartEditView = Backbone.View.extend({
 
 	onFetchBtnClick: function (e){
 		var that = this;
-		
+
 		if(this.$fetchBtn.hasClass('disabled')){
 			return;
 		}
