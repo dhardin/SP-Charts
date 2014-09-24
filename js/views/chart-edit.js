@@ -26,9 +26,6 @@ app.ChartEditView = Backbone.View.extend({
 		this.$fetchBtn = this.$('#fetchBtn');
 		this.$saveBtn = this.$('#saveBtn');
 		this.$settings = this.$('#settings');
-
-
-
 		
 		//initialize and bind events to the menu plugin
 		this.$menu.menu();
@@ -134,7 +131,7 @@ app.ChartEditView = Backbone.View.extend({
 			//populate select with every column in data obj
 			//we only need to use the first object properties as a 
 			//reference for the rest
-			for (key in data[0]){
+			for (key in data[1]){
 				$options.append($('<option value="' + key + '">' + key + '</option>'));
 			}
 
